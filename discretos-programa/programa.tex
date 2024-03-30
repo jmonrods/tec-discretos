@@ -1,0 +1,247 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Author:  Pablo Alvarado
+%
+% Programa de Licenciatura en Ingeniería en Electrónica
+% Instituto Tecnológico de Costa Rica
+% Curso: Elementos Activos
+% 
+% Phone:   +506 2550 9005
+% email:   palvarado@tec.ac.cr
+%
+% $Id: programa.tex 629 2007-01-31 17:02:08Z palvarado $
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[11pt,oneside,letterpaper]{article}
+
+\usepackage[utf8]{inputenc}             % input encoding
+\usepackage[spanish]{babel}
+
+\usepackage{ifthen}                     % provide if-then-else operators
+
+\usepackage{sty/tecPrograma}
+
+\renewcommand{\CodigoCurso}{EL-3212}
+\renewcommand{\NombreCurso}{Circuitos Discretos}
+
+\usepackage{footnote}
+\usepackage{microtype}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{hanging}
+
+% Encabezado
+\pagestyle{fancy}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\graphicspath{{./}{./fig/}{./img/}}
+
+\paginaTitulo
+
+\section{Aspectos relativos al plan de estudios}
+
+\subsection{Datos generales}
+
+\hspace*{-\margoffset}
+\begin{tabular}{ll}
+  \textbf{Nombre del curso:}              & \NombreCurso \\[1ex]
+  \textbf{Código:}                        & \CodigoCurso \\[1ex]
+  \textbf{Tipo de curso:}                 & Teórico \\[1ex]
+  \textbf{Electivo:}                      & No \\[1ex]
+  \textbf{N"o Créditos:}                  & 4 \\[1ex]
+  \textbf{N"o horas clase/semana:}        & 4 h  \\[1ex]
+  \textbf{N"o horas extraclase/semana:}   & 8 h \\[1ex]
+  \textbf{\% de las áreas curriculares:}  & 75\% Ciencias de la Ingeniería \\
+                                          & 25\% Diseño Ingeniería \\[1ex]
+  \textbf{Ubicación en plan de estudios:} & Semestre V \\[1ex]
+  \textbf{Requisitos:}                    & EL-2207 Elementos Activos \\[1ex]
+  \textbf{Correquisitos:}                 & Ninguno \\[1ex]
+  \textbf{El curso es requisito de:}      & EL-3216 Circuitos Integrados Analógicos \\
+                                          & EL-3307 Diseño Lógico \\[1ex]
+  \textbf{Asistencia:}                    & Obligatoria \\[1ex]
+  \textbf{Suficiencia:}                   & Sí \\[1ex]
+  \textbf{Posibilidad de reconocimiento:} & Sí \\[1ex]
+  \textbf{Vigencia del programa:}         & Semestre I 2023 \\[1ex]
+\end{tabular} 
+
+
+\newpage
+\msubsection{Descripción \\ General}
+%
+Se estudian los conceptos de amplificación electrónica y procesamiento de señales utilizando transistores BJT y MOSFET. Se definen los parámetros típicos que caracterizan a un amplificador en distintas condiciones de trabajo, y se ofrecen las herramientas básicas de dimensionamiento para construir amplificadores de pequeña y gran señal de pequeña y mediana complejidad. Además, se estudian los conceptos de respuesta en frecuencia, realimentación y estabilidad y la aplicación de los mismos en el desarrollo de circuitos analógicos avanzados.
+
+
+\msubsection{Objetivos}
+%
+Al terminar este curso, el estudiante debe ser capaz de definir y evaluar un amplificador electrónico y sus parámetros característicos, utilizando los modelos compactos de primer y segundo orden de los transistores BJT y MOSFET, apoyándose en métodos de análisis de circuitos para aplicar dichos parámetros en un rango determinado de operación. Esta capacidad deberá a su vez generar criterios básicos de diseño y evaluación de amplificadores electrónicos para aplicaciones avanzadas en sistemas complejos de control, comunicaciones y adquisición y procesamiento de señales.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{p{5mm}@{}p{0.65\textwidth}|p{0.15\textwidth}|p{9mm}}
+        \hline
+        & \bf{Objetivo} & \bf{\centering{}Atributos} & \bf{\centering{}Nivel$^\ast$} \\
+        
+        \noalign{\hrule height 2pt}
+         1. & Definir y evaluar un amplificador electrónico y sus parámetros característicos, utilizando los modelos compactos de primer y segundo orden de los transistores BJT y MOSFET, apoyándose en métodos de análisis de circuitos para aplicar dichos parámetros en un rango determinado de operación.
+          & \begin{minipage}[t]{0.99\linewidth}
+              \begin{compactitem}[nolistsep]
+                \item AP
+              \end{compactitem}
+            \end{minipage}
+          & \begin{minipage}[t]{0.99\linewidth}
+              \begin{compactitem}[nolistsep]
+                \item M
+              \end{compactitem}
+            \end{minipage} \\
+         \noalign{\hrule height 1pt}
+         2. & Generar criterios básicos de diseño y evaluación de amplificadores electrónicos para aplicaciones avanzadas en sistemas complejos de control, comunicaciones y adquisición y procesamiento de señales.
+            & \begin{minipage}[t]{0.99\linewidth}
+              \begin{compactitem}[nolistsep]
+                \item DI
+              \end{compactitem}
+            \end{minipage}
+          & \begin{minipage}[t]{0.99\linewidth}
+              \begin{compactitem}[nolistsep]
+              \item M
+              \end{compactitem}
+            \end{minipage} \\
+  \noalign{\hrule height 1pt}
+        \hline
+    \end{tabular}
+\end{table}
+
+$\ast$ Nivel de desarrollo de cada atributo: {\bf{I}}nicial, Inter{\bf{M}}edio o {\bf{A}}vanzado.
+
+
+\newpage
+\msubsection{Contenido}
+%
+Las 16 semanas que abarcan el curso se distribuyen en los siguientes
+temas:
+\begin{compactenum}[nolistsep]
+
+\item \textbf{Definiciones generales de los amplificadores electrónicos y de los parámetros de caracterización de un amplificador (1 semana)}
+
+\item \textbf{Amplificadores electrónicos básicos con transistores de silicio (BJT y MOSFET) (4 semanas)}
+    \begin{compactenum}[nolistsep]
+    \item Introducción a los amplificadores de señal.
+    \item Repaso de polarización.
+    \item Modelos compactos para pequeña y gran señal.
+    \item Estudio de configuraciones básicas de amplificadores BJT: emisor, colector y base común.
+    \item Configuración básica de amplificadores MOSFET: fuente, compuerta y drenador común.
+    \end{compactenum}
+
+\item \textbf{Amplificadores avanzados y otras estructuras (3 semanas)}
+    \begin{compactenum}[nolistsep]
+    \item Espejos de corriente.
+    \item Amplificador cascodo.
+    \item Amplificador diferencial.
+    \end{compactenum}
+
+\item \textbf{Respuesta de frecuencia (3 semanas)}
+    \begin{compactenum}[nolistsep]
+    \item Conceptos fundamentales de respuesta de frecuencia y teorema de Miller.
+    \item Modelos de alta frecuencia de los transistores BJT y MOSFET y frecuencia de tránsito.
+    \item Respuesta de frecuencia de configuraciones básicas.
+    \item Respuesta de etapas cascodo y pares diferenciales.
+    \end{compactenum}
+
+\item \textbf{Realimentación negativa (3 semanas)}
+    \begin{compactenum}[nolistsep]
+    \item Consideraciones generales y propiedades básicas de la realimentación negativa.
+    \item Efectos de la realimentación sobre las características básicas de un amplificador.
+    \item Técnicas de sensado y retorno.
+    \item Topologías de realimentación y problemas de estabilidad.
+    \end{compactenum}
+
+\item \textbf{Etapas de salida y amplificadores de potencia (1 semanas)}
+    \begin{compactenum}[nolistsep]
+    \item Etapa push-pull.
+    \item Consideraciones de gran señal.
+    \item Disipación de calor y eficiencia.
+    \end{compactenum}
+
+\item \textbf{Circuitos de realimentación positiva (1 semana)}
+    \begin{compactenum}[nolistsep]
+    \item Multivibradores.
+    \item Osciladores.
+    \end{compactenum}
+
+\end{compactenum}
+
+\newpage
+\section{Aspectos operativos}
+
+\msubsection{Metodología}
+%
+El curso se desarrolla con clases magistrales de manera presencial, complementadas con lecturas, resolución de problemas y tutorías.
+
+\textbf{Clases:} Las clases magistrales serán impartidas en la pizarra, sin grabación. Los apuntes deben ser tomados preferiblemente a mano por cada estudiante, por lo que se recomienda traer un cuaderno, calculadora científica no programable, regla, lápiz y borrador.
+
+\textbf{Lecturas:} Cada semana el profesor asignará lecturas con el material base para estudio, que deberán ser consultadas antes de cada una de las sesiones presenciales. Durante la clase se hará una exposición de los principales temas y ecuaciones, con ejemplos resueltos, y se brindarán ejemplos para que los estudiantes resuelvan bajo la supervisión en el aula.
+
+\textbf{Tutorías:} Las tutorías son opcionales, pero complementan la información teórica vista en clase y permiten despejar dudas con los tutores. Las dudas adicionales pueden ser atendidas sólo durante el espacio de consulta del profesor, de manera presencial.
+
+\textbf{Exámenes:} Los exámenes son presenciales, con una duración de dos horas exactas, y se atenderán consultas únicamente sobre la redacción de la prueba (de forma), no sobre la interpretación o la solución (de fondo). Las consultas serán atendidas únicamente durante los primeros 30 minutos de la prueba, después se debe permanecer en completo silencio. Se permite traer un formulario de una página, por un solo lado, escrito a mano.
+
+\textbf{Tareas:} Las tareas o proyectos serán asignados conforme se estudian los temas, y pueden ser individuales o grupales, a discreción del profesor. Las entregas se deberán hacer en un único archivo zip por medio del tecDigital. No se reciben entregas tardías bajo ninguna circunstancia, si la plataforma se cierra y el trabajo no ha sido presentado se asignará una nota de cero puntos.
+
+\textbf{Ausencias:} En cada clase presencial se tomará asistencia durante los primeros 15 minutos de la lección. El estudiante que acumule hasta un 15\% de ausencias se considerará reprobado (RPA) según la normativa vigente. 
+
+\msubsection{Evaluación}
+%
+La evaluación consistirá en tres exámenes individuales escritos y un porcentaje de tareas, desglosados como sigue:
+
+\vspace{5mm}
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+  \hline \textbf{Actividad} & \textbf{Valor} & \textbf{Temas} \\
+  \hline Tareas    & 10\% & Unidades 1-7  \\
+  Primer parcial   & 30\% & Unidades 1-2  \\
+  Segundo parcial  & 30\% & Unidades 3-4  \\
+  Tercer parcial   & 30\% & Unidades 5-7  \\
+  \hline 
+\end{tabular}
+\end{table}
+
+
+\newpage
+\msubsection{Bibliografía} 
+%
+\textbf{Obligatoria}
+
+\begin{hangparas}{0.6cm}{1}
+[1] Razavi, B. (2013). Fundamentals of Microelectronics (2nd ed.). Wiley.
+\end{hangparas}
+
+\textbf{Complementaria}
+
+\begin{hangparas}{0.6cm}{1}
+[2] Behzad Razavi. Design of Analog CMOS Integrated Circuits, 2nd ed. McGraw Hill Education, 2016.
+
+[3] Adel S. Sedra. Microelectronic Circuits (The Oxford Series in Electrical and Computer Engineering), 8th ed. Oxford University Press, 2019.
+\end{hangparas}
+
+
+\msubsection{Profesores}
+%
+\textbf{Campus Tecnológico Central Cartago}
+
+\begin{tabular}{lp{106mm}}
+  Grupo 1 & \underline{Dr.\,-Ing.\ Juan José Montero Rodríguez} \\[2mm]
+  & Licenciatura en Ingeniería Electrónica, Tecnológico de Costa Rica. Maestría en Electrónica con énfasis en Sistemas Microelectromecánicos, Tecnológico de Costa Rica. Doctorado en Ingeniería, Universidad Técnica de Hamburgo, Alemania.\\
+Correo-e & jjmontero@itcr.ac.cr    \\
+Consulta & L 9:30-11:20am\\
+Oficina  & K1-422 \\
+Teléfono & 2550-2749 \\ 
+\end{tabular}
+
+\end{document}

@@ -1,0 +1,931 @@
+\section{Clase 6}
+
+\title[Circuitos Discretos]{Circuitos Discretos}
+\subtitle{Clase 6: Base Común}
+\institute[]{Instituto Tecnológico de Costa Rica\\Escuela de Ingeniería Electrónica\\Circuitos Discretos}
+\date{\theSemester}
+\titlegraphic{\includegraphics[height=8mm]{logoTEC.png}}
+
+\begin{frame}[t]
+\titlepage
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Base Común}
+
+    \begin{columns}
+        \begin{column}{0.3\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (-1,0) to[short] (npn1.base);
+                    \draw (-1,0) -- (npn1.base);
+                    \draw (-1,0) node[ground]{};
+                    \draw (0,0.5) (npn1.collector);
+                    \draw (0,0.5) to[short,-o] (1,0.5);
+                    \draw (0,-2) node[ground]{};
+                    \draw (npn1.emitter) to[vsource,l=$v_{in}$] (0,-2);
+                    \draw (1,0.5) node[anchor=west]{$v_{out}$};
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) to[R,l=$R_C$] (0,0.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.7\textwidth}
+            Para la configuración de Base Común:
+
+            \begin{itemize}
+                \item La entrada se aplica en el emisor.
+                \item La salida se toma del colector.
+            \end{itemize}
+
+            \vspace{5mm}
+            Análisis cualitativo de $A_V$:
+
+            \begin{enumerate}
+                \item Si $v_{in}$ aumenta, $v_{BE}$ disminuye.
+                \item Si $v_{BE}$ aumenta, $i_C$ disminuye.
+                \item Si $i_C$ disminuye, $v_{RC}$ disminuye.
+                \item Si $v_{RC}$ disminuye, $v_{out}$ aumenta.
+            \end{enumerate}
+
+            $\Rightarrow$ Un cambio positivo en $v_{in}$ aumenta $v_{out}$
+
+            $\Rightarrow$ La ganancia es positiva
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Ganancia del Núcleo}
+
+    \begin{columns}
+        \begin{column}{0.35\textwidth}
+            1. LVK por la base
+            %
+            \[ v_{in} = -v_{\pi} \]
+
+            2. LCK en el colector
+            %
+            \[ g_m v_\pi + \dfrac{v_{out}}{R_C} = 0 \]
+
+            3. Combinando 1 y 2:
+            %
+            \[ -g_m v_{in} + \dfrac{v_{out}}{R_C} = 0 \]
+            %
+            \[ \dfrac{v_{out}}{R_C} = -g_m v_{in} \]
+            %
+            \[ \boxed{A_V = \dfrac{v_{out}}{v_{in}}} = +g_m R_C \]
+        \end{column}
+        \begin{column}{0.65\textwidth}
+            \begin{figure}[H]
+                \scalebox{0.95}{
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[R,l=$r_\pi$,v=$v_\pi$] (1,-2);
+                    \draw (1,-2) -- (3,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_\pi$] (3,-2);
+                    \draw (3,0) -- (6,0);
+                    \draw (2,-2) to[short,-o] (2,-3);
+                    \draw (2,-3) node[anchor=north]{$v_{in}$};
+                    \draw (2,-2) node[anchor=south]{E};
+                    \draw (1,0) node[anchor=south]{B};
+                    \draw (5,0) node[anchor=south]{C};
+                    \draw (0,0) -- (-1,0);
+                    \draw (-1,0) -- (-1,-1);
+                    \draw (-1,-1) node[ground]{};
+                    \draw (6,0) node[anchor=west]{$v_{out}$};
+                    \draw (5,0) to[R,l=$R_C$] (5,-2);
+                    \draw (5,-2) node[ground]{};
+                \end{circuitikz}
+                }
+            \end{figure}
+
+            \begin{enumerate}
+                \item La ganancia es positiva (la salida está en fase con la entrada).
+                \item La ganancia es proporcional a $g_m$
+                \item La magnitud de la ganancia es igual a la de Emisor Común.
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Impedancia de Entrada}
+
+    \begin{columns}
+        \begin{column}{0.65\textwidth}
+            \centering
+            Impedancia de entrada
+            
+            (salida en circuito abierto)
+
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[R,l=$r_\pi$,v=$v_\pi$] (1,-2);
+                    \draw (1,-2) -- (3,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_\pi$] (3,-2);
+                    \draw (3,0) -- (5,0);
+                    \draw (2,-2) to[vsource,l=$v_x$,i=$i_x$] (2,-4);
+                    \draw (2,-4) node[ground]{};
+                    \draw (2,-2) node[anchor=south]{E};
+                    \draw (1,0) node[anchor=south]{B};
+                    \draw (3,0) node[anchor=south]{C};
+                    \draw (0,0) -- (-1,0);
+                    \draw (-1,0) -- (-1,-1);
+                    \draw (-1,-1) node[ground]{};
+                    \draw (5,0) node[anchor=south]{$v_{out}$};
+                    \draw (5,0) to[R,l=$R_C$] (5,-2);
+                    \draw (5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.35\textwidth}
+            De las clases anteriores sabemos que la impedancia desde el emisor es:
+            %
+            \[ R_{in} = \dfrac{1}{g_m} \parallel r_o \parallel r_\pi \]
+            %
+            \[ \boxed{R_{in} \approx \dfrac{1}{g_m}} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Impedancia de Salida}
+
+    \centering
+    Impedancia de salida
+    
+    (entrada en cortocircuito)
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) -- (1,0);
+            \draw (1,0) to[R,l=$r_\pi$,v=$v_\pi$] (1,-2);
+            \draw (1,-2) -- (3,-2);
+            \draw (3,0) to[cisource,l=$g_m v_\pi$] (3,-2);
+            \draw (3,0) -- (9,0);
+            \draw (2,-2) node[ground]{};
+            \draw (2,-2) node[anchor=south]{E};
+            \draw (1,0) node[anchor=south]{B};
+            \draw (3,0) node[anchor=south]{C};
+            \draw (9,0) to[vsource,l=$v_x$,i=$i_x$] (9,-2);
+            \draw (9,-2) node[ground]{};
+            \draw (0,0) node[ground]{};
+            \draw (7,0) to[R,l=$R_C$] (7,-2);
+            \draw (7,-2) node[ground]{};
+            \draw (5,0) to[R,l=$r_o$] (5,-2);
+            \draw (5,-2) -- (3,-2);
+        \end{circuitikz}
+    \end{figure}
+    
+    \flushleft
+    La impedancia de salida es la misma que la de emisor común:
+
+    \[ \boxed{R_{out} = R_C \parallel r_o} \]
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Impedancias de Entrada y Salida}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Impedancia de entrada}
+
+            La impedancia de entrada es baja.
+
+            \[ R_{in} = \dfrac{1}{g_m} \]
+
+            \begin{circuitikz}
+                % Transistor
+                \draw (0,0) node [npn,xscale=-1](npn1){};
+                \draw (npn1.base) -- (1,0);
+                \draw (1,0) node[ground]{};
+                \draw (npn1.emitter) -- (0,-1);
+                \draw (npn1.collector) -- (0,1);
+                % Impedancia
+                \draw[->] (-0.4,-1.2) -- (-0.4,-0.8);
+                \draw (-0.4,-1.2) -- (-1.4,-1.2);
+                \draw (-1.4,-1.2) node[anchor=north]{$R_{in}$};
+            \end{circuitikz}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Impedancia de salida}
+
+            La impedancia de salida es alta.
+
+            \[ R_{out} = R_C \parallel r_o \]
+
+            \begin{circuitikz}
+                % Transistor
+                \draw (0,0) node [npn,xscale=-1](npn1){};
+                \draw (npn1.base) -- (1,0);
+                \draw (1,0) node[ground]{};
+                \draw (npn1.emitter) -- (0,-1);
+                \draw (npn1.collector) -- (0,1);
+                % Impedancia
+                \draw[->] (0.4,1.2) -- (0.4,0.8);
+                \draw (0.4,1.2) -- (1.4,1.2);
+                \draw (1.4,1.2) node[anchor=south]{$R_{out}$};
+            \end{circuitikz}
+            \vspace{3mm}
+        \end{column}
+    \end{columns}
+
+    \vspace{5mm}
+    Este circuito se puede utilizar como:
+
+    \begin{itemize}
+        \item Amplificador de transresistencia (entrada de corriente, salida de tensión).
+        \item Amplificador con acople de impedancia (ej. 50 $\Omega$).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común con RS}
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    \draw (1,0) to[short] (npn1.base);
+                    \draw (1,0) node[ground]{};
+                    \draw (0,0.5) (npn1.collector);
+                    \draw (0,0.5) to[short,-o] (-1,0.5);
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (-2,-1) to[R,l=$R_S$] (0,-1);
+                    \draw (-2,-1) to[vsource,l=$v_{in}$] (-2,-3);
+                    \draw (-2,-3) node[ground]{};
+                    \draw (-1,0.5) node[anchor=east]{$v_{out}$};
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) to[R,l=$R_C$] (0,0.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            La etapa de entrada se puede ver como un divisor de tensión:
+
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) to[vsource,l=$v_{in}$] (0,-2);
+                    \draw (0,0) node[anchor=south]{$v_{in}$};
+                    \draw (0,-2) node[ground]{};
+                    \draw (0,0) to[R,l=$R_S$] (2,0);
+                    \draw (2,0) to[R,l=$1/g_m$] (2,-2);
+                    \draw (2,-2) node[ground]{};
+                    \draw (2,0) node[anchor=south]{$v_E$};
+                    % Circuito de salida
+                    \draw (4,0) to[cisource,l=$-g_m v_E$] (4,-2);
+                    \draw (6,0) to[R,l=$R_C$] (6,-2);
+                    \draw (4,0) -- (6,0);
+                    \draw (6,0) node[anchor=south]{$v_{out}$};
+                    \draw (4,-2) node[ground]{};
+                    \draw (6,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+
+            El signo negativo de la fuente de corriene es por $v_\pi = v_{BE} = -v_{E}$
+
+            \begin{columns}
+                \begin{column}{0.5\textwidth}
+                    \[ v_E = \dfrac{v_{in} \times \dfrac{1}{g_m}}{R_S + \dfrac{1}{g_m}} \]
+                \end{column}
+                \begin{column}{0.5\textwidth}
+                    \[ \boxed{A_V = \dfrac{R_C}{\dfrac{1}{g_m} + R_S}} \]
+                \end{column}
+            \end{columns}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común con RS y RB}
+
+    \begin{columns}
+        \begin{column}{0.65\textwidth}
+            Este caso no se reduce a ninguna de las configuraciones anteriores. 
+            %
+            \begin{figure}[H]
+                \scalebox{0.9}{
+                \begin{circuitikz}
+                    \draw (0,0) node[ground]{};
+                    \draw (0,0) to[R,l=$R_B$] (2,0);
+                    \draw (2,0) to[R,l=$r_\pi$,v=$v_\pi$] (2,-2);
+                    \draw (2,-2) -- (4,-2);
+                    \draw (3,-2) node[anchor=south]{E};
+                    \draw (4,0) to[cisource,l=$g_m v_\pi$] (4,-2);
+                    \draw (4,0) to[short] (6,0);
+                    \draw (4,0) node[anchor=south]{C};
+                    \draw (6,0) node[anchor=south]{$v_{out}$};
+                    \draw (6,0) to[R,l=$R_C$] (6,-2);
+                    \draw (6,-2) node[ground]{};
+                    \draw (3,-2) to[R,l=$R_S$] (3,-4);
+                    \draw (3,-4) to[vsource,l=$v_{in}$] (3,-5);
+                    \draw (3,-5) node[ground]{};
+                \end{circuitikz}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.35\textwidth}
+            1. La LCK en el colector:
+            %
+            \[ g_m v_\pi = \dfrac{-v_{out}}{R_C} \]
+            %
+            \[ v_\pi = \dfrac{-v_{out}}{g_m R_C} \]
+
+            2. La corriente de base:
+            %
+            \[ i_B = \dfrac{v_\pi}{r_\pi} \]
+            %
+            \[ i_B = \dfrac{-v_{out}/g_m R_C}{\beta / g_m} \]
+            %
+            \[ i_B = \dfrac{-v_{out}}{\beta R_C} \]
+
+            3. La tensión en el emisor:
+            %
+            \[ v_E = -i_B (R_B + r_\pi) \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Base Común con RS y RB ($A_V$)}
+
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            4. La LCK en el emisor:
+            %
+            \[ \dfrac{v_\pi}{r_\pi} + g_m v_\pi = \dfrac{v_E - v_{in}}{R_E} \]
+            %
+            \[ v_\pi \left(\dfrac{1}{r_\pi} + g_m \right) = \dfrac{v_E - v_{in}}{R_E} \]
+
+            Sustituyendo las ecuaciones anteriores:
+            %
+            \[ \dfrac{-v_{out}}{\beta R_C} \left(\dfrac{1}{r_\pi} + g_m \right) = \dfrac{\dfrac{v_{out}}{\beta R_C} (R_B + r_\pi) - v_{in}}{R_E} \]
+            %
+            \[ \dfrac{-v_{out} R_E}{\beta R_C} \left(\dfrac{1}{r_\pi} + g_m \right) = \dfrac{v_{out}}{\beta R_C} (R_B + r_\pi) - v_{in} \]
+            %
+            \[ v_{in} = \dfrac{v_{out} R_E}{\beta R_C} \left(\dfrac{1}{r_\pi} + g_m \right) + \dfrac{v_{out}}{\beta R_C} (R_B + r_\pi) \]
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            %\[ v_{in} = \dfrac{v_{out}}{\beta R_C} \left[ R_E \left(\dfrac{1}{r_\pi} + g_m \right) + R_B + r_\pi \right] \]
+            %
+            Despejando $A_V$:
+            %
+            \[ A_V = \dfrac{\beta R_C}{(\beta+1)R_E + R_B + r_\pi} \]
+            %
+            \[ \boxed{A_V \approx \dfrac{R_C}{\dfrac{1}{g_m} + R_E + \dfrac{R_B}{\beta+1}}} \]
+
+            \vspace{3mm}
+            Esta ecuación es la misma que la ganancia de emisor común, con signo positivo.
+
+            \vspace{3mm}
+            \begin{itemize}
+                \item La ganancia de B.C. es la misma que la de E.C. en magnitud.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común con RS y RB ($R_{in}$)}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Impedancia de base}
+
+            \textbf{vista desde el emisor}
+
+            \vspace{3mm}
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (-3,0) to[R,l=$R_B$] (npn1.base);
+                \draw (-3,0) node[ground]{};
+                \draw (0,0.5) -- (npn1.collector);
+                \draw (0,-0.5) -- (npn1.emitter);
+                \draw[->] (-0.3,-1.2) -- (-0.3,-0.8);
+                \draw (-1.3,-1.2) -- (-0.3,-1.2);
+                \draw (-1.3,-1.2) node[anchor=south]{$R_{in}$};
+            \end{circuitikz}
+            %
+            \[ R_{in} = \dfrac{1}{g_m} + \dfrac{R_B}{\beta + 1} \]
+
+            \vspace{5mm}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Impedancia de emisor}
+
+            \textbf{vista desde la base}
+
+            \vspace{3mm}
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (-1,0) -- (npn1.base);
+                \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+                \draw (0,-2) node[ground]{};
+                \draw[->] (-1.4,-0.3) -- (-0.8,-0.3);
+                \draw (-1.4,-0.3) -- (-1.4,-1.3);
+                \draw (-1.4,-1.3) node[anchor=east]{$R_{in}$};
+            \end{circuitikz}
+            %
+            \[ R_{in} = r_\pi + (\beta+1)R_E \]
+        \end{column}
+    \end{columns}
+
+    \vspace{5mm}
+    La impedancia de entrada para el circuito de base común con $R_S$ y $R_B$ es:
+
+    \[ \boxed{R_{in} = R_S + \dfrac{1}{g_m} + \dfrac{R_B}{\beta+1}} \]
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Polarización con RE}
+
+    \begin{columns}
+        \begin{column}{0.3\textwidth}
+            \scalebox{0.8}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    % Resistencia de colector
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    % Tension de salida
+                    \draw (0,0.5) to[short,-o] (1,0.5);
+                    \draw (1,0.5) node[anchor=west]{$v_{out}$};
+                    % Fuente alimentacion
+                    \draw (0,2) -- (0,2.5);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                    % Fuente en la base
+                    \draw (-1.5,0) -- (npn1.base);
+                    \draw (-1.5,0) to[battery,l=$V_B$] (-1.5,-1);
+                    \draw (-1.5,-1) node[ground]{};
+                    % Conexion en el emisor
+                    \draw (npn1.emitter) -- (0,-3);
+                    \draw (0,-3) to[C] (-2,-3);
+                    \draw (-2,-3) to[vsource,l=$v_{in}$] (-2,-5);
+                    \draw (-2,-5) node[ground]{};
+                \end{circuitikz}
+            }
+        \end{column}
+        \begin{column}{0.7\textwidth}
+            El circuito de la izquierda tiene un problema:
+
+            En gran se\~{n}al, no hay un camino de CD a tierra.
+
+            \vspace{3mm}
+            Se debe agregar una resistencia de emisor:
+
+            \centering
+            \vspace{5mm}
+            \scalebox{0.8}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    % Resistencia de colector
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    % Tension de salida
+                    \draw (0,0.5) to[C,-o] (-2,0.5);
+                    \draw (-2,0.5) node[anchor=east]{$v_{out}$};
+                    % Fuente alimentacion
+                    \draw (0,2) -- (0,2.5);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                    % Fuente en la base
+                    \draw (npn1.base) -- (1.5,0);
+                    \draw (1.5,0) to[battery,l=$V_B$] (1.5,-1);
+                    \draw (1.5,-1) node[ground]{};
+                    % Resistencia de emisor
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    % Circuito de entrada
+                    \draw (-4,-1) to[C] (-2,-1);
+                    \draw (-2,-1) -- (0,-1);
+                    \draw (-4,-1) to[vsource,l=$v_{in}$] (-4,-3);
+                    \draw (-4,-3) node[ground]{};
+                    % Impedancia de emisor 1
+                    \draw (-1.3,-0.7) -- (-0.3,-0.7);
+                    \draw[->] (-0.3,-0.7) -- (-0.3,-0.4);
+                    \draw (-1.3,-0.7) node[anchor=east]{$1/g_m$};
+                    % Impedancia de emisor 2
+                    \draw (-1.3,-1.3) -- (-0.3,-1.3);
+                    \draw[->] (-0.3,-1.3) -- (-0.3,-1.6);
+                    \draw (-1.3,-1.3) node[anchor=east]{$R_E$};
+                \end{circuitikz}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Polarización con RE y RS}
+
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            Si la fuente tiene una resistencia en serie:
+
+            \centering
+            \vspace{5mm}
+            \scalebox{0.9}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    % Resistencia de colector
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    % Tension de salida
+                    \draw (0,0.5) to[short,-o] (-2,0.5);
+                    \draw (-2,0.5) node[anchor=east]{$v_{out}$};
+                    % Fuente alimentacion
+                    \draw (0,2) -- (0,2.5);
+                    \draw (-1,2.5) -- (0,2.5);
+                    \draw (-1,2.5) node[ground]{};
+                    % Fuente en la base
+                    \draw (npn1.base) -- (1.5,0);
+                    \draw (1.5,0) to[battery,l=$V_B$] (1.5,-1);
+                    \draw (1.5,-1) node[ground]{};
+                    % Resistencia de emisor
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    % Circuito de entrada
+                    \draw (-4,-1) to[R,l=$R_S$] (-2,-1);
+                    \draw (-2,-1) -- (0,-1);
+                    \draw (-4,-1) to[vsource,l=$v_{in}$] (-4,-3);
+                    \draw (-4,-3) node[ground]{};
+                    % Impedancia de emisor 1
+                    \draw (-1.3,-0.7) -- (-0.3,-0.7);
+                    \draw[->] (-0.3,-0.7) -- (-0.3,-0.4);
+                    \draw (-1.3,-0.7) node[anchor=east]{$1/g_m$};
+                    % Impedancia de emisor 2
+                    \draw (-1.3,-1.3) -- (-0.3,-1.3);
+                    \draw[->] (-0.3,-1.3) -- (-0.3,-1.6);
+                    \draw (-1.3,-1.3) node[anchor=east]{$R_E$};
+                \end{circuitikz}
+            }
+
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \[ v_E = \dfrac{v_{in} \times \left( R_E \parallel \dfrac{1}{g_m} \right)}{ R_S + \left( R_E \parallel \dfrac{1}{g_m} \right) } \]
+            %
+            \[ A_V = \dfrac{v_{out}}{v_{in}} = \dfrac{v_{out}}{v_E} \times \dfrac{v_E}{v_{in}} \]
+            %
+            \[ A_V = g_m R_C \times \dfrac{ R_E \parallel \dfrac{1}{g_m} }{ R_S +  R_E \parallel \dfrac{1}{g_m}  } \]
+
+            Después de simplificar:
+            %
+            \[ \boxed{A_V = \dfrac{g_m R_C}{1 + (1 + g_m R_E) R_S}} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Polarizaciones Completas}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Por resistencia de base}
+            
+            \vspace{3mm}
+            \scalebox{0.9}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    % Resistencia de colector
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    % Tension de salida
+                    \draw (0,0.5) to[short,-o] (-2,0.5);
+                    \draw (-2,0.5) node[anchor=east]{$v_{out}$};
+                    % Fuente alimentacion
+                    \draw (0,2) -- (0,2.5);
+                    \draw (-0.5,2.5) -- (2.5,2.5);
+                    \draw (1,2.5) node[anchor=south]{$V_{CC}$};
+                    % Polarizacion en la base
+                    \draw (npn1.base) -- (2,0);
+                    \draw (2,2) to[R,l=$R_B$] (2,0);
+                    \draw (2,2) -- (2,2.5);
+                    % Resistencia de emisor
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    % Circuito de entrada
+                    \draw (-2,-1) to[R,l=$R_S$] (0,-1);
+                    \draw (-2,-1) to[vsource,l=$v_{in}$] (-2,-3);
+                    \draw (-2,-3) node[ground]{};
+                \end{circuitikz}
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Por divisor de tensión}
+            
+            \vspace{3mm}
+            \scalebox{0.9}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    % Resistencia de colector
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    % Tension de salida
+                    \draw (0,0.5) to[short,-o] (-2,0.5);
+                    \draw (-2,0.5) node[anchor=east]{$v_{out}$};
+                    % Fuente alimentacion
+                    \draw (0,2) -- (0,2.5);
+                    \draw (-0.5,2.5) -- (2.5,2.5);
+                    \draw (1,2.5) node[anchor=south]{$V_{CC}$};
+                    % Polarizacion en la base
+                    \draw (npn1.base) -- (2,0);
+                    \draw (2,2) to[R,l=$R_1$] (2,0);
+                    \draw (2,0) to[R,l=$R_2$] (2,-2);
+                    \draw (2,-2) node[ground]{};
+                    \draw (2,2) -- (2,2.5);
+                    % Resistencia de emisor
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    % Circuito de entrada
+                    \draw (-2,-1) to[R,l=$R_S$] (0,-1);
+                    \draw (-2,-1) to[vsource,l=$v_{in}$] (-2,-3);
+                    \draw (-2,-3) node[ground]{};
+                \end{circuitikz}
+            }
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    Además es común agregar un condensador de la base a tierra, para eliminar la resistencia de base en peque\~{n}a se\~{n}al.
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Ejemplo}
+
+    Considere el circuito de la figura:
+
+    \vspace{3mm}
+    \begin{columns}
+        \begin{column}{0.67\textwidth}
+            \centering
+            \scalebox{0.825}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    % Resistencia de colector
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    % Tension de salida
+                    \draw (0,0.5) to[C,-o] (-2,0.5);
+                    \draw (-2,0.5) node[anchor=east]{$v_{out}$};
+                    % Fuente alimentacion
+                    \draw (0,2) -- (0,2.5);
+                    \draw (-0.5,2.5) -- (2.5,2.5);
+                    \draw (1,2.5) node[anchor=south]{$V_{CC}=2.5\ V$};
+                    % Polarizacion en la base
+                    \draw (npn1.base) -- (2,0);
+                    \draw (2,2) to[R,l=$R_1$] (2,0);
+                    \draw (2,0) to[R,l=$R_2$] (2,-2);
+                    \draw (2,-2) node[ground]{};
+                    \draw (2,2) -- (2,2.5);
+                    % Resistencia de emisor
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    % Circuito de entrada
+                    \draw (-4,-1) to[R,l=$R_S$] (-2,-1);
+                    \draw (-2,-1) to[C] (0,-1);
+                    \draw (-4,-1) to[vsource,l=$v_{in}$] (-4,-3);
+                    \draw (-4,-3) node[ground]{};
+                    % Condensador de base
+                    \draw (2,0) -- (4,0);
+                    \draw (4,0) to[C,l=$C_b$] (4,-2);
+                    \draw (4,-2) node[ground]{};
+                \end{circuitikz}
+            }        
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \centering
+            Parámetros del transistor
+            
+            \vspace{3mm}
+            $\beta=100$
+            
+            $I_S=8\times{}10^{-16}\ A$
+            
+            $V_A=0\ V$
+
+            \vspace{5mm}
+            Valores de resistencias
+
+            \vspace{3mm}
+            $R_E = 400\ \Omega$
+
+            $R_S = 1\ \Omega$
+
+            $R_1 = 13\ k\Omega$
+
+            $R_2 = 12\ k\Omega$
+
+            $R_C = 1\ k\Omega$
+        \end{column}
+    \end{columns}
+    \flushleft
+    Determine el punto de operación ($I_C$, $V_{BE}$) y calcule $g_m$, $r_\pi$, $r_o$, $A_V$, $R_{in}$, $R_{out}$.
+
+    Repita los cálculos si $V_A=5\ V$.
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Solución (1)}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Análisis de gran señal (sin efecto Early)}
+
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    % Resistencia de colector
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    % Fuente alimentacion
+                    \draw (0,2) -- (0,2.5);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                    % Equivalente Thévenin
+                    \draw (npn1.base) to[R,l=$R_{TH}$] (2.5,0);
+                    \draw (2.5,0) to[V,l=$V_{TH}$] (2.5,-2);
+                    \draw (2.5,-2) node[ground]{};
+                    % Resistencia de emisor
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                \end{circuitikz}    
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            El equivalente de Thévenin:
+
+            \[ V_{TH} = \dfrac{V_{CC}\cdot{}R_2}{R_1+R_2} \]
+            %
+            \[ V_{TH} = \dfrac{2.5\ V\cdot{}12\ k\Omega}{13\ k\Omega+12\ k\Omega} \] 
+            %
+            \[ \boxed{V_{TH} = 1.2\ V} \]
+            
+            \vspace{3mm}
+            \[ R_{TH} = R_1 \parallel R_2 \]
+            %
+            \[ R_{TH} = \dfrac{13\ k\Omega \times{} 12\ k\Omega}{13\ k\Omega + 12\ k\Omega} \]
+            %
+            \[ \boxed{R_{TH} = 6.24\ k\Omega} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Solución (2)}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            1. La malla por la base:
+            %
+            \[ V_{CC}-I_B R_{TH}-V_{BE}-I_E R_E = 0 \]
+            %
+            \[ V_{CC}-I_B R_{TH}-V_{BE}-(\beta+1)I_B R_E = 0 \]
+            %
+            \[ I_B = \dfrac{V_{CC}-V_{BE}}{R_{TH} + (\beta+1)R_E} \]
+            %
+            \[ I_C = \beta \dfrac{V_{CC}-V_{BE}}{R_{TH} + (\beta+1)R_E} \]
+            
+            \vspace{3mm}
+            2. La ecuación de Shockley:
+            %
+            \[ I_C = I_S \left( e^{V_{BE}/V_t} - 1 \right) \]
+            %
+            \[ I_C \approx e^{V_{BE}/V_t} \]
+            %
+            \[ V_{BE} = V_t \ln \left( \dfrac{I_C}{I_S} \right) \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Por el método iterativo:
+            %
+            \[ I_{C1} = (100) \left( \dfrac{2.5\ V-0.7\ V}{6.24\ k\Omega + (101)(400\ \Omega)} \right) \]
+            %
+            \[ I_{C1} = 3.8593\ mA \]
+            %
+            \[ V_{BE1} = 26\ mV \ln (\dfrac{3.8593\ mA}{8\times{}10^{-16}\ A}) \]
+            %
+            \[ V_{BE1} = 759.32\ mV \]
+
+            Iterando (con 5 cifras significativas):
+            %
+            \[ I_{C2} = 3.7322\ mA \]
+            %
+            \[ V_{BE2} = 758.45\ mV \]
+            %
+            \[ \boxed{I_{C3} = 3.7340\ mA} \]
+            %
+            \[ \boxed{V_{BE3} = 758.46\ mV} \]
+            %
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Solución (3)}
+
+    \begin{columns}
+        \begin{column}{0.65\textwidth}
+            \textbf{Análisis de pequeña señal (sin efecto Early)}
+
+            \[ g_m = \dfrac{I_C}{V_t} = \dfrac{3.7340\ mA}{26\ mV} = 0.14361\ S \]
+            %
+            \[ r_\pi = \dfrac{\beta}{g_m} = \dfrac{100}{0.14361\ S} = 696.33\ \Omega \]
+            %
+            \[ r_o = \dfrac{V_A}{I_C} = \infty \]
+
+            \vspace{3mm}
+            \[ A_V = \dfrac{v_{out}}{v_E} \times \dfrac{v_E}{v_{in}} \]
+            %
+            \[ A_V = g_m R_C \times \dfrac{R_E \parallel 1/g_m}{R_S + R_E \parallel 1/g_m} \]
+            %
+            \[ A_V = (0.14361\ S)(1\ k\Omega) \times \dfrac{400\ \Omega \parallel 6.9633\ \Omega}{1\ \Omega + 400\ \Omega \parallel 6.9633\ \Omega} \]
+            %
+            \[ A_V = 143.61 \times 0.87252 = \boxed{125.30} \]
+        \end{column}
+        \begin{column}{0.35\textwidth}
+            \begin{figure}[H]
+                \scalebox{0.9}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn,xscale=-1](npn1){};
+                    % Resistencia de emisor
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    % Fuente vin
+                    \draw (-2,-1) to[R,l=$R_S$] (0,-1);
+                    \draw (-2,-1) to[vsource,l=$v_{in}$] (-2,-3);
+                    \draw (-2,-3) node[ground]{};
+                    % Salida
+                    \draw (0,1) to[short,-o] (-2,1);
+                    \draw (-2,1) node[anchor=east]{$v_{out}$};
+                    % Conexion colector
+                    \draw (npn1.collector) -- (0,1);
+                    \draw (0,3) to[R,l=$R_C$] (0,1);
+                    % Fuente VCC
+                    \draw (0,3) -- (1,3);
+                    \draw (1,3) node[ground]{};
+                    % Conexion base
+                    \draw (npn1.base) -- (1,0);
+                    \draw (1,0) node[ground]{};
+                    % Impedancia de salida
+                    \draw (-2,2) node[anchor=south]{$R_{out}=R_C$};
+                    \draw (-2,1.3) node[anchor=south]{$\boxed{R_{out}=1\ k\Omega}$};
+                    % Impedancia de entrada
+                    \draw (-1,-4.5) node[anchor=south]{$R_{in} = R_E \parallel 1/g_m$};
+                    \draw (-1,-5.3) node[anchor=south]{$\boxed{R_{in} = 6.9633\ \Omega}$};
+                \end{circuitikz}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común: Solución (3)}
+
+    \textbf{Análisis de gran señal (con efecto Early)}
+
+    \begin{multicols}{2}
+        1. La malla por la base:
+        %
+        \[ V_{CC}-I_B R_B-V_{BE}-I_E R_E = 0 \]
+        %
+        \[ V_{CC}-I_B R_B-V_{BE}-(\beta+1)I_B R_E = 0 \]
+        %
+        \[ I_B = \dfrac{V_{CC}-V_{BE}}{R_B + (\beta+1)R_E} \]
+        %
+        \[ I_C = \beta \dfrac{V_{CC}-V_{BE}}{R_B + (\beta+1)R_E} \]
+        
+        \vspace{3mm}
+        2. La ecuación de Shockley:
+        %
+        \[ I_C = I_S \left( e^{V_{BE}/V_t} - 1 \right)\left( 1 + \dfrac{V_{CE}}{V_A}\right) \]
+        
+        3. La malla por el colector:
+        %
+        \[ V_{CC} = I_C R_C + V_{CE} + I_E R_E \]
+        %
+        \[ V_{CE} = V_{CC} - I_C R_C - (\beta+1) I_B R_E \]
+        %
+        \[ V_{CE} = V_{CC} - I_C R_C - \dfrac{(\beta+1)}{\beta} I_C R_E \]
+        %
+        \[ V_{CE} = V_{CC} - I_C \left[ R_C - \dfrac{(\beta+1)}{\beta} R_E \right] \]
+
+        \vspace{3mm}
+        Tenemos un sistema de tres ecuaciones y tres incógnitas ($I_C$, $V_{BE}$, $V_{CE}$).
+    \end{multicols}
+\end{frame}

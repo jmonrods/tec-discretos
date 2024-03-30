@@ -1,0 +1,727 @@
+\title[Circuitos Discretos]{Circuitos Discretos}
+\subtitle{Clase 3: Fundamentos de Amplificadores}
+\institute[]{Instituto Tecnológico de Costa Rica\\Escuela de Ingeniería Electrónica\\Circuitos Discretos}
+\date{\theSemester}
+\titlegraphic{\includegraphics[height=8mm]{logoTEC.png}}
+
+\section{Clase 3}
+
+\begin{frame}[t]
+    \titlepage
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Tipos de Amplificadores Ideales}
+
+    Existen cuatro tipos de amplificadores, según la entrada y la salida:
+
+    \vspace{3mm}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Amplificador de tensión}
+
+            \vspace{3mm}
+            \scalebox{0.66}{
+                \begin{circuitikz}
+                    \draw (0,0) node[buffer](amp1){};
+                    \draw (amp1.center) node[]{$A_V$};
+                    \draw (-3,0) to[V,l=$v_{in}$] (-3,-2);
+                    \draw (-3,0) -- (amp1.in);
+                    \draw (3,0) to[open,v^=$v_{out}$](3,-2);
+                    \draw (-3,-2) node[ground]{};
+                    \draw (3,-2) node[ground]{};
+                    \draw (amp1.out) to[short,-o] (3,0);
+                    % input impedance
+                    \draw (-1.75,-1) -- (-1.75,-0.25);
+                    \draw[->] (-1.75,-0.25) -- (-1.25,-0.25);
+                    \draw (-1.75,-1) node[anchor=south west]{$R_{in}$};
+                    % output impedance
+                    \draw (1.75,-1) -- (1.75,-0.25);
+                    \draw[->] (1.75,-0.25) -- (1.25,-0.25);
+                    \draw (1.75,-1) node[anchor=south east]{$R_{out}$};
+                    % gain equation
+                    \draw (0,-2) node[anchor=center]{$A_V = v_{out}/v_{in}$};
+                    % impedance marks
+                    \draw (-1.25,-1.25) node[]{$\approx \infty$};
+                    \draw (1.25,-1.25) node[]{$\approx 0$};
+                \end{circuitikz}    
+            }
+
+            \vspace{3mm}
+            \textbf{Amplificador de transconductancia}
+
+            \vspace{3mm}
+            \scalebox{0.66}{
+                \begin{circuitikz}
+                    \draw (0,0) node[buffer](amp1){};
+                    \draw (amp1.center) node[]{$G_m$};
+                    \draw (-3,0) to[vsource,l=$v_{in}$] (-3,-2);
+                    \draw (-3,0) -- (amp1.in);
+                    \draw (3,0) to[short,i=$i_{out}$](3,-2);
+                    \draw (-3,-2) node[ground]{};
+                    \draw (3,-2) node[ground]{};
+                    \draw (amp1.out) to[short,-o] (3,0);
+                    % input impedance
+                    \draw (-1.75,-1) -- (-1.75,-0.25);
+                    \draw[->] (-1.75,-0.25) -- (-1.25,-0.25);
+                    \draw (-1.75,-1) node[anchor=south west]{$R_{in}$};
+                    % output impedance
+                    \draw (1.75,-1) -- (1.75,-0.25);
+                    \draw[->] (1.75,-0.25) -- (1.25,-0.25);
+                    \draw (1.75,-1) node[anchor=south east]{$R_{out}$};
+                    % gain equation
+                    \draw (0,-2) node[anchor=center]{$G_m = i_{out}/v_{in}$};
+                    % impedance marks
+                    \draw (-1.25,-1.25) node[]{$\approx \infty$};
+                    \draw (1.25,-1.25) node[]{$\approx \infty$};
+                \end{circuitikz}    
+            }
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Amplificador de corriente}
+
+            \vspace{3mm}
+            \scalebox{0.66}{
+                \begin{circuitikz}
+                    \draw (0,0) node[buffer](amp1){};
+                    \draw (amp1.center) node[]{$A_I$};
+                    \draw (-3,-2) to[isource,l_=$i_{in}$] (-3,-0);
+                    \draw (-3,0) -- (amp1.in);
+                    \draw (3,0) to[short,i=$i_{out}$](3,-2);
+                    \draw (-3,-2) node[ground]{};
+                    \draw (3,-2) node[ground]{};
+                    \draw (amp1.out) to[short,-o] (3,0);
+                    % input impedance
+                    \draw (-1.75,-1) -- (-1.75,-0.25);
+                    \draw[->] (-1.75,-0.25) -- (-1.25,-0.25);
+                    \draw (-1.75,-1) node[anchor=south west]{$R_{in}$};
+                    % output impedance
+                    \draw (1.75,-1) -- (1.75,-0.25);
+                    \draw[->] (1.75,-0.25) -- (1.25,-0.25);
+                    \draw (1.75,-1) node[anchor=south east]{$R_{out}$};
+                    % gain equation
+                    \draw (0,-2) node[anchor=center]{$A_I = i_{out}/i_{in}$};
+                    % impedance marks
+                    \draw (-1.25,-1.25) node[]{$\approx 0$};
+                    \draw (1.25,-1.25) node[]{$\approx \infty$};
+                \end{circuitikz}    
+            }
+
+            \vspace{3mm}
+            \textbf{Amplificador de transresistencia}
+
+            \vspace{3mm}
+            \scalebox{0.66}{
+                \begin{circuitikz}
+                    \draw (0,0) node[buffer](amp1){};
+                    \draw (amp1.center) node[]{$R_0$};
+                    \draw (-3,-2) to[isource,l_=$i_{in}$] (-3,-0);
+                    \draw (-3,0) -- (amp1.in);
+                    \draw (3,0) to[open,v^=$v_{out}$](3,-2);
+                    \draw (-3,-2) node[ground]{};
+                    \draw (3,-2) node[ground]{};
+                    \draw (amp1.out) to[short,-o] (3,0);
+                    % input impedance
+                    \draw (-1.75,-1) -- (-1.75,-0.25);
+                    \draw[->] (-1.75,-0.25) -- (-1.25,-0.25);
+                    \draw (-1.75,-1) node[anchor=south west]{$R_{in}$};
+                    % output impedance
+                    \draw (1.75,-1) -- (1.75,-0.25);
+                    \draw[->] (1.75,-0.25) -- (1.25,-0.25);
+                    \draw (1.75,-1) node[anchor=south east]{$R_{out}$};
+                    % gain equation
+                    \draw (0,-2) node[anchor=center]{$R_0 = v_{out}/i_{in}$};
+                    % impedance marks
+                    \draw (-1.25,-1.25) node[]{$\approx 0$};
+                    \draw (1.25,-1.25) node[]{$\approx 0$};
+                \end{circuitikz}    
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Impedancias de Entrada y Salida}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            Impedancia de entrada
+
+            \vspace{3mm}
+            \begin{circuitikz}
+                \draw (0,0) rectangle (2,3);
+                % ports
+                \draw (0,2.5) node[anchor=west]{1};
+                \draw (0,0.5) node[anchor=west]{2};
+                \draw (2,2.5) node[anchor=east]{3};
+                \draw (2,0.5) node[anchor=east]{4};
+                % external circuitry
+                \draw (0,2.5) -- (-1,2.5);
+                \draw (-1,2.5) to[vsource,l=$v_x$,i=$i_x$] (-1,0.5);
+                \draw (-1,0.5) -- (0,0.5);
+                \draw (2,2.5) to[short,-o] (3,2.5);
+                \draw (2,0.5) to[short,-o] (3,0.5);
+            \end{circuitikz}
+
+            \vspace{3mm}
+            \textbf{La impedancia de entrada se mide con la salida en circuito abierto}
+
+            \[ R_{in} = \dfrac{v_x}{i_x} \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            Impedancia de salida
+
+            \vspace{3mm}
+            \begin{circuitikz}
+                \draw (0,0) rectangle (2,3);
+                % ports
+                \draw (0,2.5) node[anchor=west]{1};
+                \draw (0,0.5) node[anchor=west]{2};
+                \draw (2,2.5) node[anchor=east]{3};
+                \draw (2,0.5) node[anchor=east]{4};
+                % external circuitry
+                \draw (2,2.5) -- (3,2.5);
+                \draw (3,2.5) to[vsource,l=$v_x$,i=$i_x$] (3,0.5);
+                \draw (3,0.5) -- (2,0.5);
+                \draw (0,2.5) to[short,-o] (-1,2.5);
+                \draw (0,0.5) to[short,-o] (-1,0.5);
+                \draw (-1,2.5) -- (-1,0.5);
+            \end{circuitikz}
+
+            \vspace{3mm}
+            \textbf{La impedancia de salida se mide con la entrada en corto circuito}
+
+            \[ R_{out} = \dfrac{v_x}{i_x} \]
+        \end{column}
+    \end{columns}
+
+    \centering
+    \vspace{6mm}
+    Este análisis se hace utilizando una fuente de pequeña señal $v_x$
+
+    (en ambos casos se deben apagar las fuentes de CD)
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Ganancia con Impedancias No Ideales}
+
+    Considere el siguiente circuito amplificador de tensión:
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            % amplifier triangle
+            \draw (0,-2) -- (0,2);
+            \draw (0,-2) -- (4,0);
+            \draw (0,2) -- (4,0);
+            % input impedance and ports
+            \draw (0.5,1) to[R,l=$R_{in}$] (0.5,-1);
+            \draw (0.5,1) to[short,-o] (-0.5,1);
+            \draw (0.5,-1) to[short,-o] (-0.5,-1);
+            % output circuitry and ports
+            \draw (2,1) to[vsource,l=$A_V\cdot{}v_{1}$] (2,-1);
+            \draw (2,1) to[R,l=$R_{out}$,-o] (4,1);
+            \draw (2,-1) to[short,-o] (4,-1);
+            % port numbers
+            \draw (-0.5,1) node[anchor=south]{1};
+            \draw (-0.5,-1) node[anchor=north]{2};
+            \draw (4,1) node[anchor=south]{3};
+            \draw (4,-1) node[anchor=north]{4};
+            % input source and parasitic impedance
+            \draw (-2.5,1) to[vsource,l=$v_{in}$] (-2.5,-1);
+            \draw (-2.5,1) to[R,l=$R_S$] (-0.5,1);
+            \draw (-0.5,1) to[open,v=$v_1$] (-0.5,-1);
+            \draw (-2.5,-1) to[short] (-0.5,-1);
+            % output circuitry (load)
+            \draw (4,1) to[short] (5,1);
+            \draw (4,-1) to[short] (5,-1);
+            \draw (5,1) to[R,l=$R_L$] (5,-1);
+        \end{circuitikz}
+    \end{figure}
+
+    Se sabe que la ganancia del amplificador es $A_V=20$. Los valores de las resistencias son: $R_S=10\ \Omega$, $R_{in}=1\ k\Omega$, $R_{out}=8\ \Omega$, $R_{L}=100\ \Omega$.
+
+    \vspace{3mm}
+    Si se aplica una tensión $v_{in}=10\ mV$ en la entrada del circuito, encuentre el valor de la tensión de salida $v_{out}$.
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Ganancia con Impedancias No Ideales}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \[ v_1 = \dfrac{v_{in} \times R_{in}}{R_{S} + R_{in}} \]
+
+            \[ v_1 = \dfrac{v_{in} \times 1\ k\Omega}{10\ \Omega + 1\ k\Omega} \]
+
+            \[ v_1 = v_{in} \times 0.9901 \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \[ v_{out} = \dfrac{A_V \times v_{1} \times R_{L}}{R_{out} + R_{L}} \]
+
+            \[ v_{out} = \dfrac{A_V \times v_{1} \times 100\ \Omega}{8\ \Omega + 100\ \Omega} \]
+
+            \[ v_{out} = A_V \times v_{1} \times 0.9259 \]
+        \end{column}
+    \end{columns}
+
+    \vspace{5mm}
+    Combinando las dos ecuaciones anteriores se obtiene:
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \[ v_{out} = A_V \times v_{in} \times 0.9901 \times 0.9259 \]
+
+            \[ v_{out} = v_{in} \times A_V \times 0.9167 \]
+
+            \[ v_{out} = v_{in} \times \textbf{18.3352} \]
+
+            \[ \boxed{v_{out} = 180.33\ mV} \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Si el amplificador fuera ideal, la tensión de salida esperada es: 
+            
+            \[ v_{out} = v_{in} \times A_V = 200\ mV \]
+            
+            \vspace{3mm}
+            ¿Qué sucedería si se conecta una resistencia de carga de $8\ \Omega$? (la mayoría de parlantes tienen esta impedancia).
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Topologías de Amplificadores: Entrada}
+
+    La entrada de un amplificador se podría conectar en una de las tres terminales:
+
+    \vspace{3mm}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \centering
+            \vspace{3mm}
+            Entrada en la base
+
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (npn1.base) -- (-1.5,0);
+                \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                \draw (-1.5,-2) node[ground]{};
+                \draw (npn1.emitter) node[ground]{};
+            \end{circuitikz}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \centering
+            \vspace{3mm}
+            Entrada en el emisor
+
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (npn1.base) -- (-1,0);
+                \draw (-1,0) node[ground]{};
+                \draw (npn1.emitter) to[vsource,l=$v_{in}$] (0,-2);
+                \draw (0,-2) node[ground]{};
+            \end{circuitikz}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \centering
+            \vspace{3mm}
+            Entrada en el colector?
+
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (npn1.base) -- (-1,0);
+                \draw (-1,0) node[ground]{};
+                \draw (npn1.emitter) node[ground]{};
+                \draw (1,2) to[vsource,l=$v_{in}$] (1,0);
+                \draw (1,0) node[ground]{};
+                \draw (npn1.collector) -- (0,2);
+                \draw (0,2) -- (1,2);
+            \end{circuitikz}
+        \end{column}
+    \end{columns}
+
+    \vspace{5mm}
+    \begin{itemize}
+        \item En las dos primeras conexiones, la entrada modifica la tensión $v_{BE}$ y esto a su vez cambia la corriente $i_C$.
+        \item La tercera forma de conexión no es válida. La entrada no se puede conectar en el colector, porque la tensión $v_{BE}$ no es función de la tensión del colector.
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Topologías de Amplificadores: Salida}
+
+    La salida se puede tomar también de una de las tres terminales:
+
+    \vspace{3mm}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \centering
+            \vspace{3mm}
+            Salida en el colector
+
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (npn1.emitter) node[ground]{};
+                \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                \draw (0,2) -- (0,2.5);
+                \draw (-0.5,2.5) -- (0.5,2.5);
+                \draw (0,0.5) to[short,-o] (1,0.5);
+                \draw (1,0.5) node[anchor=west]{$v_{out}$};
+            \end{circuitikz}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \centering
+            \vspace{3mm}
+            Salida en el emisor
+
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+                \draw (0,-2) node[ground]{};
+                \draw (npn1.collector) -- (0,1);
+                \draw (-0.5,1) -- (0.5,1);
+                \draw (0,-0.5) to[short,-o] (1,-0.5);
+                \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+            \end{circuitikz}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \centering
+            \vspace{3mm}
+            Salida en la base?
+
+            \begin{circuitikz}
+                \draw (0,0) node[npn](npn1){};
+                \draw (npn1.base) to[short,-o] (-2.5,0);
+                \draw (-2.5,0) node[anchor=east]{$v_{out}$};
+                \draw (-1.5,0) to[R,l=$R_B$] (-1.5,-2);
+                \draw (-1.5,-2) node[ground]{};
+                \draw (npn1.emitter) node[ground]{};
+            \end{circuitikz}
+        \end{column}
+    \end{columns}
+
+    \vspace{5mm}
+    \begin{itemize}
+        \item En las primeras dos conexiones, la resistencia convierte la corriente $i_C$ a una tensión de salida.
+        \item La tercera conexión no es válida. La salida no se puede tomar de la base, porque la tensión de la base no depende de $i_C$.
+        \item Si la entrada es el emisor, la salida no puede ser el emisor simultáneamente.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Topologías de Amplificadores}
+
+    Las tres posibles combinaciones se resumen en la siguiente tabla:
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{lll}
+            \hline Entrada & Salida & Topología \\
+            \hline Base    & Colector & Emisor común (C.E.) \\
+            Emisor         & Colector & Base común (C.B.) \\
+            Base           & Emisor   & Colector común (C.C.)\textsuperscript{*} \\
+            \hline
+        \end{tabular}
+
+        \footnotesize *También se conoce como Seguidor de Emisor.
+    \end{table}
+
+    Observe que el nombre de la configuración es el de la terminal que no se utiliza.
+
+    \begin{itemize}
+        \item Esto se debe a que la terminal es común tanto a la entrada como a la salida.
+        \item La tensión en la terminal común es una tensión de corriente directa.
+    \end{itemize}
+
+    \vspace{3mm}
+    Las mismas combinaciones se pueden construir para el transistor MOSFET, en cuyo caso se denominan:
+
+    \begin{itemize}
+        \item Fuente común (C.S.)
+        \item Compuerta común (C.G.)
+        \item Drenador común (C.D.), también conocida como Seguidor de Fuente.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común}
+
+    \begin{columns}
+        \begin{column}{0.35\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (-1.5,0) to[short] (npn1.base);
+                    \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                    \draw (-1.5,-2) node[ground]{};
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    \draw (0,0.5) to[short,-o] (1,0.5);
+                    \draw (0,-1) node[ground]{};
+                    \draw (0,-1) -- (npn1.emitter);
+                    \draw (1,0.5) node[anchor=west]{$v_{out}$};
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.65\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[R,l=$r_\pi$,v=$v_\pi$] (1,-2);
+                    \draw (1,-2) -- (3,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_\pi$] (3,-2);
+                    \draw (3,0) -- (6,0);
+                    \draw (2,-2) node[ground]{};
+                    \draw (2,-2) node[anchor=south]{E};
+                    \draw (1,0) node[anchor=south]{B};
+                    \draw (5,0) node[anchor=south]{C};
+                    \draw (0,0) node[anchor=east]{$v_{in}$};
+                    \draw (6,0) node[anchor=west]{$v_{out}$};
+                    \draw (5,0) to[R,l=$R_C$] (5,-2);
+                    \draw (5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Base Común}
+
+    \begin{columns}
+        \begin{column}{0.3\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (-1,0) -- (npn1.base);
+                    \draw (-1,0) node[ground]{};
+                    \draw (0,0.5) (npn1.collector);
+                    \draw (0,0.5) to[short,-o] (1,0.5);
+                    \draw (0,-2) node[ground]{};
+                    \draw (npn1.emitter) to[vsource,l=$v_{in}$] (0,-2);
+                    \draw (1,0.5) node[anchor=west]{$v_{out}$};
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) to[R,l=$R_C$] (0,0.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.7\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[R,l=$r_\pi$,v=$v_\pi$] (1,-2);
+                    \draw (1,-2) -- (3,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_\pi$] (3,-2);
+                    \draw (3,0) -- (6,0);
+                    \draw (2,-2) to[short,-o] (2,-3);
+                    \draw (2,-3) node[anchor=north]{$v_{in}$};
+                    \draw (2,-2) node[anchor=south]{E};
+                    \draw (1,0) node[anchor=south]{B};
+                    \draw (5,0) node[anchor=south]{C};
+                    \draw (0,0) -- (-1,0);
+                    \draw (-1,0) -- (-1,-1);
+                    \draw (-1,-1) node[ground]{};
+                    \draw (6,0) node[anchor=west]{$v_{out}$};
+                    \draw (5,0) to[R,l=$R_C$] (5,-2);
+                    \draw (5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Colector Común (Seguidor de Emisor)}
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (npn1.collector) -- (0,1);
+                    \draw (-0.5,1) -- (0.5,1);
+                    \draw (0,1) node[anchor=south]{$V_{CC}$};
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                    \draw (-1.5,0) -- (npn1.base);
+                    \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                    \draw (-1.5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[R,l=$r_\pi$,v=$v_\pi$] (1,-2);
+                    \draw (1,-2) -- (4,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_\pi$] (3,-2);
+                    \draw (3,0) -- (5,0);
+                    \draw (5,0) node[ground]{};
+                    \draw (2,-2) node[anchor=south]{E};
+                    \draw (1,0) node[anchor=south]{B};
+                    \draw (5,0) node[anchor=south]{C};
+                    \draw (0,0) node[anchor=east]{$v_{in}$};
+                    \draw (4,-2) node[anchor=west]{$v_{out}$};
+                    \draw (3,-2) to[R,l=$R_E$] (3,-4);
+                    \draw (3,-4) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Fuente Común}
+
+    \begin{columns}
+        \begin{column}{0.35\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){};
+                    \draw (-1.5,0) to[short] (nmos1.gate);
+                    \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                    \draw (-1.5,-2) node[ground]{};
+                    \draw (0,2) to[R,l=$R_D$] (nmos1.drain);
+                    \draw (0,0.5) to[short,-o] (1,0.5);
+                    \draw (0,-1) node[ground]{};
+                    \draw (0,-1) -- (nmos1.source);
+                    \draw (1,0.5) node[anchor=west]{$v_{out}$};
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{DD}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.65\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[open,v=$v_{gs}$] (1,-2);
+                    \draw (1,-2) -- (3,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_{gs}$] (3,-2);
+                    \draw (3,0) -- (6,0);
+                    \draw (2,-2) node[ground]{};
+                    \draw (2,-2) node[anchor=south]{S};
+                    \draw (1,0) node[anchor=south]{G};
+                    \draw (5,0) node[anchor=south]{D};
+                    \draw (0,0) node[anchor=east]{$v_{in}$};
+                    \draw (6,0) node[anchor=west]{$v_{out}$};
+                    \draw (5,0) to[R,l=$R_D$] (5,-2);
+                    \draw (5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Compuerta Común}
+
+    \begin{columns}
+        \begin{column}{0.3\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){};
+                    \draw (-1,0) -- (nmos1.gate);
+                    \draw (-1,0) node[ground]{};
+                    \draw (0,0.5) (nmos1.drain);
+                    \draw (0,0.5) to[short,-o] (1,0.5);
+                    \draw (0,-2) node[ground]{};
+                    \draw (nmos1.source) to[vsource,l=$v_{in}$] (0,-2);
+                    \draw (1,0.5) node[anchor=west]{$v_{out}$};
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) to[R,l=$R_D$] (0,0.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{DD}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.7\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[open,v=$v_{gs}$] (1,-2);
+                    \draw (1,-2) -- (3,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_{gs}$] (3,-2);
+                    \draw (3,0) -- (6,0);
+                    \draw (2,-2) to[short,-o] (2,-3);
+                    \draw (2,-3) node[anchor=north]{$v_{in}$};
+                    \draw (2,-2) node[anchor=south]{S};
+                    \draw (1,0) node[anchor=south]{G};
+                    \draw (5,0) node[anchor=south]{D};
+                    \draw (0,0) -- (-1,0);
+                    \draw (-1,0) -- (-1,-1);
+                    \draw (-1,-1) node[ground]{};
+                    \draw (6,0) node[anchor=west]{$v_{out}$};
+                    \draw (5,0) to[R,l=$R_D$] (5,-2);
+                    \draw (5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Drenador Común (Seguidor de Fuente)}
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){};
+                    \draw (nmos1.source) to[R,l=$R_S$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (nmos1.drain) -- (0,1);
+                    \draw (-0.5,1) -- (0.5,1);
+                    \draw (0,1) node[anchor=south]{$V_{DD}$};
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                    \draw (-1.5,0) -- (nmos1.gate);
+                    \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                    \draw (-1.5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[open,v=$v_{gs}$] (1,-2);
+                    \draw (1,-2) -- (4,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_{gs}$] (3,-2);
+                    \draw (3,0) -- (5,0);
+                    \draw (5,0) node[ground]{};
+                    \draw (2,-2) node[anchor=south]{S};
+                    \draw (1,0) node[anchor=south]{G};
+                    \draw (5,0) node[anchor=south]{D};
+                    \draw (0,0) node[anchor=east]{$v_{in}$};
+                    \draw (4,-2) node[anchor=west]{$v_{out}$};
+                    \draw (3,-2) to[R,l=$R_S$] (3,-4);
+                    \draw (3,-4) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}

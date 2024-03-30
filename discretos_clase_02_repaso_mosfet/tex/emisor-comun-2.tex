@@ -1,0 +1,608 @@
+\section{Clase 5}
+
+\title[Circuitos Discretos]{Circuitos Discretos}
+\subtitle{Clase 5: Emisor Común con Polarización}
+\institute[]{Instituto Tecnológico de Costa Rica\\Escuela de Ingeniería Electrónica\\Circuitos Discretos}
+\date{\theSemester}
+\titlegraphic{\includegraphics[height=8mm]{logoTEC.png}}
+
+\begin{frame}[t]
+    \titlepage
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Amplificador de Emisor Común}
+
+    Si se conecta un micrófono y un parlante, ¿el circuito funciona?
+
+    \vspace{5mm}
+    \centering
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-2,0) to[short] (npn1.base);
+            \draw (-2,-2) to[mic,l=$mic$] (-2,0);
+            \draw (-2,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[short] (2,0.5);
+            \draw (2,0.5) to[loudspeaker,l=$8\ \Omega$] (2,-1.5);
+            \draw (2,-1.5) node[ground]{};
+            \draw (0,-1) node[ground]{};
+            \draw (0,-1) -- (npn1.emitter);
+            \draw (0,2.5) -- (0,2);
+            \draw (-0.5,2.5) -- (0.5,2.5);
+            \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Amplificador de Emisor Común}
+
+    Si se conecta un micrófono y un parlante, ¿el circuito funciona?
+
+    \vspace{5mm}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[H]
+                \centering
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (-1.5,0) to[short] (npn1.base);
+                    \draw (-1.5,-2) to[mic,l=$mic$] (-1.5,0);
+                    \draw (-1.5,-2) node[ground]{};
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    \draw (0,0.5) to[short] (1.5,0.5);
+                    \draw (1.5,0.5) to[loudspeaker,l=$8\ \Omega$] (1.5,-1.5);
+                    \draw (1.5,-1.5) node[ground]{};
+                    \draw (0,-1) node[ground]{};
+                    \draw (0,-1) -- (npn1.emitter);
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Sin un circuito de polarización, no existe una corriente $I_C$.
+
+            \begin{itemize}
+                \item El punto de operación en gran señal está en el origen.
+                \item La transconductancia es cero.
+                \item No hay amplificación.
+            \end{itemize}
+
+            \vspace{3mm}
+            Aun si se agrega un circuito de polarización, la baja impedancia del parlante hace que la ganancia disminuya de manera considerable.
+            %
+            \[ A_V = - g_m (R_C \parallel 8\ \Omega) \approx -g_m \cdot 8\ \Omega \]
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Condensadores de Desacople}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Con el parlante conectado, también existe un problema de polarización:
+
+            \begin{itemize}
+                \item El parlante está formado por una inductancia, que en CD es casi un corto circuito en la salida. 
+                \item El micrófono es una fuente de CA, que en gran señal se convertiría en un corto circuito en la entrada.
+            \end{itemize}
+            
+            \vspace{3mm}
+            Para evitar este problema se utilizan \textbf{condensadores de desacople}. 
+            
+            \begin{itemize}
+                \item Un condensador en CC (gran señal) es un circuito abierto.
+                \item Un condensador en CA (pequeña señal) es un cortocircuito. 
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[H]
+                \scalebox{0.85}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (-2,0) to[C] (npn1.base);
+                    \draw (-2,-2) to[mic,l=$mic$] (-2,0);
+                    \draw (-2,-2) node[ground]{};
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    \draw (0,0.5) to[C] (2,0.5);
+                    \draw (2,0.5) to[loudspeaker,l=$8\ \Omega$] (2,-1.5);
+                    \draw (2,-1.5) node[ground]{};
+                    \draw (0,-1) node[ground]{};
+                    \draw (0,-1) -- (npn1.emitter);
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-0.5,2.5) -- (0.5,2.5);
+                    \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+                \end{circuitikz}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Pasos de Solución de Circuitos Amplificadores}
+
+    \textbf{Pasos de solución}
+
+    \vspace{5mm}
+    1. Se analiza el circuito en gran señal.
+
+    \begin{itemize}
+        \item Condensadores son un circuito abierto.
+        \item Fuentes de AC apagadas.
+        \item Se calcula el punto de operación ($I_C$ y $V_{BE}$).
+    \end{itemize}
+
+    \vspace{5mm}
+    2. Se calculan los parámetros de pequeña señal: $g_m$, $r_\pi$, $r_o$.
+
+    \vspace{5mm}
+    3. Se analiza el circuito en pequeña señal.
+
+    \begin{itemize}
+        \item Condensadores son un corto circuito.
+        \item Fuentes de DC apagadas.
+        \item Se calcula la ganancia y las impedancias de entrada y salida.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Polarización por Resistencia de Base}
+
+    \centering
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-4,0) to[C] (-2,0);
+            \draw (-2,0) -- (npn1.base);
+            \draw (-2,2) to[R,l=$R_B$] (-2,0);
+            \draw (-2,2) -- (-2,2.5);
+            \draw (-4,-2) to[mic,l=$mic$] (-4,0);
+            \draw (-4,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[C] (2,0.5);
+            \draw (2,0.5) to[loudspeaker,l=$R_L$] (2,-1.5);
+            \draw (2,-1.5) node[ground]{};
+            \draw (0,-1) node[ground]{};
+            \draw (0,-1) -- (npn1.emitter);
+            \draw (0,2.5) -- (0,2);
+            \draw (-2.5,2.5) -- (0.5,2.5);
+            \draw (-1,2.5) node[anchor=south]{$V_{CC}$};
+        \end{circuitikz}
+    \end{figure}
+
+    \flushleft
+    Para el circuito mostrado anteriormente, calcule:
+
+    \begin{itemize}
+        \item El punto de operación ($I_C$, $V_{BE}$)
+        \item Los parámetros de pequeña señal ($g_m$, $r_\pi$, $r_o$)
+        \item La ganancia $A_V$, impedancia de entrada $R_{in}$ e impedancia de salida $R_{out}$
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Polarización por Resistencia de Base}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Gran Señal}
+
+            \begin{figure}[H]
+                \scalebox{0.8}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (-2,0) -- (npn1.base);
+                    \draw (-2,2) to[R,l=$R_B$] (-2,0);
+                    \draw (-2,2) -- (-2,2.5);
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    \draw (0,-1) node[ground]{};
+                    \draw (0,-1) -- (npn1.emitter);
+                    \draw (0,2.5) -- (0,2);
+                    \draw (-2.5,2.5) -- (0.5,2.5);
+                    \draw (-1,2.5) node[anchor=south]{$V_{CC}$};
+                \end{circuitikz}
+                }
+            \end{figure}
+            %
+            \[ \left\{ \begin{matrix}
+                I_C = \beta \left( \dfrac{V_{CC}-V_{BE}}{R_B} \right) \\
+                V_{BE} = V_t \ln (I_C / I_S)
+            \end{matrix} \right. \]
+            %
+            \[ \begin{matrix}
+                g_m = I_C / V_t \\
+                r_\pi = \beta / g_m \\
+                r_o = V_A / I_C
+            \end{matrix} \]
+            \vspace{3mm}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Pequeña Señal}
+
+            \begin{figure}[H]
+                \scalebox{0.8}{
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (-3,0) -- (-2,0);
+                    \draw (-2,0) -- (npn1.base);
+                    \draw (-2,0) to[R,l=$R_B$] (-2,-2);
+                    \draw (-2,-2) node[ground]{};
+                    \draw (-3,-2) to[mic,l=$mic$] (-3,0);
+                    \draw (-3,0) node[anchor=south]{$v_{in}$};
+                    \draw (-3,-2) node[ground]{};
+                    \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+                    \draw (0,0.5) to[short,-o] (2,0.5);
+                    \draw (2,0.5) node[anchor=south]{$v_{out}$};
+                    \draw (1,0.5) to[loudspeaker,l=$R_L$] (1,-1.5);
+                    \draw (1,-1.5) node[ground]{};
+                    \draw (0,-1) node[ground]{};
+                    \draw (0,-1) -- (npn1.emitter);
+                    \draw (0,2.5) -- (0,2);
+                    \draw (0,2.5) -- (-1,2.5);
+                    \draw (-1,2.5) node[ground]{};
+                \end{circuitikz}
+                }
+            \end{figure}
+            %
+            \[ A_V = -g_m (R_C \parallel r_o \parallel R_L) \]
+            %
+            \[ R_{in} = R_B \parallel r_\pi \]
+            %
+            \[ R_{out} = R_C \parallel r_o \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Impedancias de Entrada y Salida}
+
+    \centering
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-4,0) to[C] (-2,0);
+            \draw (-2,0) -- (npn1.base);
+            \draw (-2,2) to[R,l=$R_B$] (-2,0);
+            \draw (-2,2) -- (-2,2.5);
+            \draw (-5,0) -- (-4,0);
+            \draw (-5,-2) to[mic,l=$mic$] (-5,0);
+            \draw (-5,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[C] (2,0.5);
+            \draw (2,0.5) -- (3,0.5);
+            \draw (3,0.5) to[loudspeaker,l=$R_L$] (3,-1.5);
+            \draw (3,-1.5) node[ground]{};
+            \draw (0,-1) node[ground]{};
+            \draw (0,-1) -- (npn1.emitter);
+            \draw (0,2.5) -- (0,2);
+            \draw (-2.5,2.5) -- (0.5,2.5);
+            \draw (-1,2.5) node[anchor=south]{$V_{CC}$};
+            % Recuadro del amplificador
+            \draw[dashed] (-4,-2) rectangle (2,3.5);
+            % Impedancia de entrada
+            \draw[->] (-4.7,0.5) -- (-4.2,0.5);
+            \draw (-4.7,0.5) -- (-4.7,1.5);
+            \draw (-4.7,1.5) node[anchor=east]{$R_{in}$};
+            % Impedancia de salida
+            \draw[->] (2.8,1) -- (2.3,1);
+            \draw (2.8,1) -- (2.8,2);
+            \draw (2.8,2) node[anchor=west]{$R_{out}$};
+        \end{circuitikz}
+    \end{figure}
+
+    \flushleft
+    Las impedancias de entrada y salida son las que se observan hacia adentro de las terminales del amplificador, \textbf{omitiendo la fuente y la carga.}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Degeneración de Emisor y $R_S$}
+    
+    Considere que se agrega degeneración de emisor ($R_E$) y que la fuente tiene una impedancia no ideal:
+
+    \centering
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-4,0) to[C] (-2,0);
+            \draw (-2,0) -- (npn1.base);
+            \draw (-2,2) to[R,l=$R_B$] (-2,0);
+            \draw (-2,2) -- (-2,2.5);
+            \draw (-6,-2) to[mic,l=$mic$] (-6,0);
+            \draw (-5.3,0) to[R,l=$R_S$] (-4,0);
+            \draw (-5.3,0) -- (-6,0);
+            \draw (-6,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[C] (2,0.5);
+            \draw (2,0.5) to[loudspeaker,l=$R_L$] (2,-1.5);
+            \draw (2,-1.5) node[ground]{};
+            \draw (0,-2) node[ground]{};
+            \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+            \draw (0,2.5) -- (0,2);
+            \draw (-2.5,2.5) -- (0.5,2.5);
+            \draw (-1,2.5) node[anchor=south]{$V_{CC}$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Degeneración de Emisor y $R_S$}
+    
+    En pequeña señal, el circuito queda como sigue:
+
+    \centering
+    \vspace{3mm}
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-3,0) -- (npn1.base);
+            \draw (-3,0) to[R,l=$R_B$] (-3,-2);
+            \draw (-3,-2) node[ground]{};
+            \draw (-6,-2) to[mic,l=$mic$] (-6,0);
+            \draw (-6,0) to[R,l=$R_S$] (-3,0);
+            \draw (-6,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) -- (2,0.5);
+            \draw (2,0.5) to[loudspeaker,l=$R_L$] (2,-1.5);
+            \draw (2,-1.5) node[ground]{};
+            \draw (0,-2) node[ground]{};
+            \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+            \draw (0,2.5) -- (0,2);
+            \draw (-1,2.5) -- (0,2.5);
+            \draw (-1,2.5) node[ground]{};
+            \draw (-4.5,1.5) node[anchor=south]{ $ R_{in} = R_B \parallel \left[r_\pi + (\beta+1)R_E\right]$ };
+            \draw (-4.5,1) node[anchor=south]{ $ R_{out} = R_C \parallel r_o \left[1 + g_m (R_E \parallel r_\pi)\right] $ };
+        \end{circuitikz}
+    \end{figure}
+    
+    \[ A_V = \dfrac{-R_C \parallel R_L \parallel r_o(1+g_m (R_E\parallel r_\pi))}{1/g_m + R_E} \times \dfrac{R_B \parallel \left[r_\pi + (\beta+1)R_E\right]}{R_S + R_B \parallel \left[r_\pi + (\beta+1)R_E\right]} \]
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Polarización por Divisor de Tensión}
+
+    \begin{figure}[H]
+        \scalebox{1}{
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-2,0) -- (npn1.base);
+            \draw (-2,0) to[R,l=$R_2$] (-2,-2);
+            \draw (-2,-2) node[ground]{};
+            \draw (-4,0) to[C] (-2,0);
+            \draw (-5.3,0) to[R,l=$R_S$] (-4,0);
+            \draw (-5.3,0) -- (-6,0);
+            \draw (-6,-2) to[mic,l=$mic$] (-6,0);
+            \draw (-6,0) node[anchor=south]{$v_{in}$};
+            \draw (-6,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[C] (2,0.5);
+            \draw (2,0.5) to[short,-o] (3,0.5);
+            \draw (3,0.5) node[anchor=south]{$v_{out}$};
+            \draw (2,0.5) to[loudspeaker,l=$R_L$] (2,-1.5);
+            \draw (2,-1.5) node[ground]{};
+            \draw (0,-2) node[ground]{};
+            \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+            \draw (0,2.5) -- (0,2);
+            \draw (-2.5,2.5) -- (0.5,2.5);
+            \draw (-1,2.5) node[anchor=south]{$V_{CC}$};
+            \draw (-2,2.5) -- (-2,2);
+            \draw (-2,2) to[R,l=$R_1$] (-2,0);
+        \end{circuitikz}
+        }
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Polarización por Divisor de Tensión}
+
+    \begin{figure}[H]
+        \scalebox{1}{
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-2,0) -- (npn1.base);
+            \draw (-3,0) to[R,l=$R_1 \parallel R_2$] (-3,-2);
+            \draw (-3,-2) node[ground]{};
+            \draw (-4,0) to[short] (-2,0);
+            \draw (-5.3,0) to[R,l=$R_S$] (-4,0);
+            \draw (-5.3,0) -- (-6,0);
+            \draw (-6,-2) to[mic,l=$mic$] (-6,0);
+            \draw (-6,0) node[anchor=south]{$v_{in}$};
+            \draw (-6,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[short] (2,0.5);
+            \draw (2,0.5) to[short,-o] (3,0.5);
+            \draw (3,0.5) node[anchor=south]{$v_{out}$};
+            \draw (2,0.5) to[loudspeaker,l=$R_L$] (2,-1.5);
+            \draw (2,-1.5) node[ground]{};
+            \draw (0,-2) node[ground]{};
+            \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+            \draw (0,2.5) -- (0,2);
+            % Fuente de alimentación en AC
+            \draw (-1.5,2.5) -- (0,2.5);
+            \draw (-1.5,2.5) node[ground]{};
+            \draw (-5.5,1.5) node[anchor=south]{ $ R_{in} = R_1 \parallel R_2 \parallel \left[r_\pi + (\beta+1)R_E\right]$ };
+            \draw (-5.5,1) node[anchor=south]{ $ R_{out} = R_C \parallel r_o \left[1 + g_m (R_E \parallel r_\pi)\right] $ };
+        \end{circuitikz}
+        }
+    \end{figure}
+
+    Solución 1: divisor de tensión en la entrada
+    %
+    \[ A_V = \dfrac{-R_C \parallel R_L \parallel r_o(1+g_m (R_E\parallel r_\pi))}{1/g_m + R_E} \times \dfrac{(R_1 \parallel R_2) \parallel \left[r_\pi + (\beta+1)R_E\right]}{R_S + (R_1 \parallel R_2) \parallel \left[r_\pi + (\beta+1)R_E\right]} \]
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Polarización por Divisor de Tensión}
+
+    \begin{figure}[H]
+        \scalebox{1}{
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-2,0) -- (npn1.base);
+            \draw (-3,0) to[R,l=$R_1 \parallel R_2$] (-3,-2);
+            \draw (-3,-2) node[ground]{};
+            \draw (-4,0) to[short] (-2,0);
+            \draw (-5.3,0) to[R,l=$R_S$] (-4,0);
+            \draw (-5.3,0) -- (-6,0);
+            \draw (-6,-2) to[mic,l=$mic$] (-6,0);
+            \draw (-6,0) node[anchor=south]{$v_{in}$};
+            \draw (-6,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[short] (2,0.5);
+            \draw (2,0.5) to[short,-o] (3,0.5);
+            \draw (3,0.5) node[anchor=south]{$v_{out}$};
+            \draw (2,0.5) to[loudspeaker,l=$R_L$] (2,-1.5);
+            \draw (2,-1.5) node[ground]{};
+            \draw (0,-2) node[ground]{};
+            \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+            \draw (0,2.5) -- (0,2);
+            % Fuente de alimentación en AC
+            \draw (-1.5,2.5) -- (0,2.5);
+            \draw (-1.5,2.5) node[ground]{};
+            \draw (-5.5,1.5) node[anchor=south]{ $ R_{in} = R_1 \parallel R_2 \parallel \left[r_\pi + (\beta+1)R_E\right]$ };
+            \draw (-5.5,1) node[anchor=south]{ $ R_{out} = R_C \parallel r_o \left[1 + g_m (R_E \parallel r_\pi)\right] $ };
+        \end{circuitikz}
+        }
+    \end{figure}
+
+    Solución 2: resistencias de base aparecen en serie con el emisor (entre $\beta+1$)
+    %
+    \[ A_V = \dfrac{-R_C \parallel R_L \parallel r_o (1+g_m(R_E\parallel r_\pi))}{\dfrac{1}{g_m} + R_E + \dfrac{R_1 \parallel R_2 \parallel R_S}{\beta + 1}} \]
+\end{frame}
+
+
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Condensador de Derivación (Bypass)}
+
+    \begin{figure}[H]
+        \scalebox{0.95}{
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-2,0) -- (npn1.base);
+            \draw (-2,2) to[R,l=$R_1$] (-2,0);
+            \draw (-2,0) to[R,l=$R_2$] (-2,-2);
+            \draw (-2,-2) node[ground]{};
+            \draw (-4,0) to[C] (-2,0);
+            \draw (-5.3,0) to[R,l=$R_S$] (-4,0);
+            \draw (-5.3,0) -- (-6,0);
+            \draw (-6,-2) to[mic,l=$mic$] (-6,0);
+            \draw (-6,0) node[anchor=south]{$v_{in}$};
+            \draw (-6,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,0.5) to[C] (2,0.5);
+            \draw (2,0.5) to[short,-o] (4,0.5);
+            \draw (4,0.5) node[anchor=south]{$v_{out}$};
+            \draw (3,0.5) to[loudspeaker,l=$R_L$] (3,-1.5);
+            \draw (3,-1.5) node[ground]{};
+            \draw (0,-2) node[ground]{};
+            \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+            % Condensador de derivacion
+            \draw (0,-0.5) -- (1.5,-0.5);
+            \draw (1.5,-0.5) to[C,l=$C_b$] (1.5,-2);
+            \draw (1.5,-2) node[ground]{};
+            % Fuente de alimentacion
+            \draw (0,2.5) -- (0,2);
+            \draw (-2.5,2.5) -- (0.5,2.5);
+            \draw (-1,2.5) node[anchor=south]{$V_{CC}$};
+            \draw (-2,2.5) -- (-2,2);
+            % Ecuaciones Rin y Rout
+            \draw (-5.5,1.5) node[anchor=south]{ $ R_{in} = R_1 \parallel R_2 \parallel r_\pi$ };
+            \draw (-5.5,1) node[anchor=south]{ $ R_{out} = R_C \parallel r_o $ };
+        \end{circuitikz}
+        }
+    \end{figure}
+
+    \[ A_V = -g_m (R_C \parallel R_L \parallel r_o) \times \dfrac{(R_1 \parallel R_2) \parallel r_\pi}{R_S + (R_1 \parallel R_2) \parallel r_\pi} \]
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Ejemplo}
+
+    Para el circuito mostrado en la figura, determine el punto de operación y calcule los siguientes parámetros: $g_m$, $r_\pi$, $r_o$, $v_{out}/v_B$, $v_B/v_{in}$ y $A_V$.
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (-4,0) to[C] (-2,0);
+            \draw (-6,0) to[R,l=$R_S$,a=$1\ k\Omega$] (-4,0);
+            \draw (-6,0) to[short,-o] (-7,0);
+            \draw (-7,0) node[anchor=east]{$v_{in}$};
+            \draw (-2,0) -- (npn1.base);
+            \draw (-2,2) to[R,l=$R_B$,a=$50\ k\Omega$] (-2,0);
+            \draw (-2,2) -- (-2,2.5);
+            \draw (0,2) to[R,l=$R_C$,a=$1\ k\Omega$] (npn1.collector);
+            \draw (0,-0.5) -- (2,-0.5);
+            \draw (2,-0.5) to[C,l=$C_b$] (2,-2);
+            \draw (2,-2) node[ground]{};
+            \draw (0,0.5) to[short,-o] (3,0.5);
+            \draw (3,0.5) node[anchor=west]{$v_{out}$};
+            \draw (npn1.emitter) to[R,l=$R_E$,a=$2\ k\Omega$] (0,-2) ;
+            \draw (0,-2) node[ground]{};
+            \draw (0,2.5) -- (0,2);
+            \draw (-2.5,2.5) -- (0.5,2.5);
+            \draw (-1,2.5) node[anchor=south]{$V_{CC}=2.5\ V$};
+        \end{circuitikz}
+    \end{figure}
+    
+    Considere que el transistor tiene $I_S=8\times{}10^{-16}\ A$, $\beta=100$, $V_A=5\ V$.
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Emisor Común: Solución}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Punto de operación}
+            %
+            \[ I_B = \beta \dfrac{V_{CC}-V_{BE}-I_E R_E}{R_B} \]
+            %
+            \[ I_C = 708\ \mu A \]
+            %
+            \[ V_{BE} = 715\ mV \]
+            %
+            \vspace{3mm}
+            \textbf{Parámetros $\pi$}
+            %
+            \[ g_m = \dfrac{I_C}{V_t} = \dfrac{708\ \mu A}{26\ mV} = \boxed{27.23\ mS} \]
+            %
+            \[ r_\pi = \dfrac{\beta}{g_m} = \dfrac{100}{27.23\ mS} = \boxed{3.67\ k\Omega} \]
+            %
+            \[ r_o = \dfrac{V_A}{I_C} = \dfrac{5\ V}{708\ \mu A} = \boxed{7.06\ k\Omega} \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Ganancia}
+            %
+            \[ A_V = \dfrac{v_{out}}{v_B}\times{}\dfrac{v_B}{v_{in}} \]
+            %
+            \[ A_V = -g_m (R_C \parallel r_o) \times{}\dfrac{R_B\parallel r_\pi}{R_S+R_B\parallel r_\pi} \]
+            %
+            \[ \dfrac{v_{out}}{v_B} = -(27.23\ mS) (1\ k\Omega \parallel 7.06\ k\Omega) \]
+            %
+            \[ \dfrac{v_{out}}{v_B} = -23.85 \]
+            %
+            \[ \dfrac{v_B}{v_{in}} = \dfrac{50\ k\Omega \parallel 3.67\ k\Omega}{1\ k\Omega+50\ k\Omega \parallel 3.67\ k\Omega} \]
+            %
+            \[ \dfrac{v_B}{v_{in}} = 0.77 \]
+            %
+            \[ \boxed{A_V = 18.36} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%\begin{frame}[t]
+%    \frametitle{Etapas E.C. en cascada}
+%\end{frame}

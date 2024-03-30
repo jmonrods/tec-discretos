@@ -1,0 +1,48 @@
+\documentclass[10pt,aspectratio=169]{beamer}
+
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[letterpaper,landscape,border shrink=5mm]
+
+\usetheme{Madrid}
+\definecolor{Pantone295}{rgb}{0, 0.15686, 0.33333} % Pantone 295 (primary)
+\definecolor{UBCgrey}{rgb}{0.3686, 0.5255, 0.6235} % UBC Grey (secondary)
+\setbeamercolor{palette primary}{bg=Pantone295,fg=white}
+\setbeamercolor{palette secondary}{bg=Pantone295,fg=white}
+\setbeamercolor{palette tertiary}{bg=Pantone295,fg=white}
+\setbeamercolor{palette quaternary}{bg=Pantone295,fg=white}
+\setbeamercolor{structure}{fg=Pantone295} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=Pantone295} % TOC sections
+% Override palette coloring with secondary
+\setbeamercolor{subsection in head/foot}{bg=UBCgrey,fg=white}
+
+
+\author[Dr.-Ing. Juan José Montero Rodríguez]{Dr.-Ing. Juan José Montero Rodríguez}
+\newcommand{\theSemester}{Semestre II-2020}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+\usepackage[american,nooldvoltagedirection,arrowmos]{circuitikz}
+
+% Packages to plot functions
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{textcomp} % to use \textmu
+\usepackage[absolute,overlay]{textpos} % to place floating text boxes with \begin{textblock*}{width}(x,y)
+\usepackage{tcolorbox}
+
+\usepackage{graphicx}
+\graphicspath{{./pdf/}{./png/}{./svg/}}
+
+\setbeamertemplate{navigation symbols}{}
+
+
+\begin{document}
+
+\include{./tex/emisor-comun-1}
+
+\end{document}

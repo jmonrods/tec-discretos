@@ -1,0 +1,226 @@
+\section{Clase 10}
+
+\title[Circuitos Discretos]{Circuitos Discretos}
+\subtitle{Clase 10: Drenador Común}
+\institute[]{Instituto Tecnológico de Costa Rica\\Escuela de Ingeniería Electrónica\\Circuitos Discretos}
+\date{\theSemester}
+\titlegraphic{\includegraphics[height=8mm]{logoTEC.png}}
+
+\begin{frame}[t]
+\titlepage
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Drenador Común (Seguidor de Fuente)}
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){};
+                    \draw (nmos1.source) to[R,l=$R_S$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (nmos1.drain) -- (0,1);
+                    \draw (-0.5,1) -- (0.5,1);
+                    \draw (0,1) node[anchor=south]{$V_{DD}$};
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                    \draw (-1.5,0) -- (nmos1.gate);
+                    \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                    \draw (-1.5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            Para la configuración de Drenador Común:
+
+            \begin{itemize}
+                \item La entrada se aplica en la compuerta.
+                \item La salida se toma de la fuente.
+            \end{itemize}
+
+            \vspace{5mm}
+            Análisis cualitativo de $A_V$:
+
+            \begin{enumerate}
+                \item Si $v_{in}$ aumenta, $v_{GS}$ aumenta
+                \item Si $v_{GS}$ aumenta, $i_D$ aumenta
+                \item Si $i_D$ aumenta, $v_{RS}$ aumenta
+                \item Si $v_{RS}$ aumenta, $v_{out}$ aumenta
+            \end{enumerate}
+
+            $\Rightarrow$ un cambio positivo en $v_{in}$ aumenta $v_{out}$
+
+            $\Rightarrow$ la ganancia es positiva
+
+            \vspace{5mm}
+            En esta configuración la ganancia es menor que uno.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+
+\begin{frame}[t]
+    \frametitle{Drenador Común (Seguidor de Fuente)}
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){};
+                    \draw (nmos1.source) to[R,l=$R_S$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (nmos1.drain) -- (0,1);
+                    \draw (-0.5,1) -- (0.5,1);
+                    \draw (0,1) node[anchor=south]{$V_{DD}$};
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                    \draw (-1.5,0) -- (nmos1.gate);
+                    \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                    \draw (-1.5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[open,v=$v_{gs}$] (1,-2);
+                    \draw (1,-2) -- (4,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_{gs}$] (3,-2);
+                    \draw (3,0) -- (5,0);
+                    \draw (5,0) node[ground]{};
+                    \draw (2,-2) node[anchor=south]{S};
+                    \draw (1,0) node[anchor=south]{G};
+                    \draw (5,0) node[anchor=south]{D};
+                    \draw (0,0) node[anchor=east]{$v_{in}$};
+                    \draw (4,-2) node[anchor=west]{$v_{out}$};
+                    \draw (3,-2) to[R,l=$R_S$] (3,-4);
+                    \draw (3,-4) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \[ \boxed{A_V = \dfrac{r_o \parallel R_S}{\dfrac{1}{g_m} + r_o \parallel R_S}} \]
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \[ \boxed{R_{in} = \infty} \]
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \[ \boxed{R_{out} = \dfrac{1}{g_m} \parallel r_o \parallel R_S} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Drenador Común: Polarización}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Por resistencia de compuerta}
+
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){};
+                    \draw (nmos1.source) to[R,l=$R_S$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (nmos1.drain) -- (0,2.5);
+                    \draw (-2.5,2.5) -- (0.5,2.5);
+                    \draw (-1,2.5) node[anchor=south]{$V_{DD}$};
+                    \draw (-2,2.5) -- (-2,2);
+                    \draw (-2,2) to[R,l=$R_G$] (-2,0);
+                    \draw (-2,0) -- (nmos1.gate);
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (-3,0) to[short,o-] (-2,0);
+                    \draw (-3,0) node[anchor=east]{$v_{in}$};
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Por divisor de tensión}
+
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){};
+                    \draw (nmos1.source) to[R,l=$R_S$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (nmos1.drain) -- (0,2.5);
+                    \draw (-2.5,2.5) -- (0.5,2.5);
+                    \draw (-1,2.5) node[anchor=south]{$V_{DD}$};
+                    \draw (-2,2.5) -- (-2,2);
+                    \draw (-2,2) to[R,l=$R_1$] (-2,0);
+                    \draw (-2,0) to[R,l=$R_2$] (-2,-2);
+                    \draw (-2,-2) node[ground]{};
+                    \draw (-2,0) -- (nmos1.gate);
+                    \draw (-3,0) to[short,o-] (-2,0);
+                    \draw (-3,0) node[anchor=east]{$v_{in}$};
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Drenador Común: Ganancia Máxima}
+
+    Para maximizar la ganancia, se puede reemplazar la resistencia $R_S$ por una fuente de corriente.
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){M1};
+                    \draw (nmos1.source) to[isource,l=$I_{SS}$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (nmos1.drain) -- (0,2.5);
+                    \draw (-2.5,2.5) -- (0.5,2.5);
+                    \draw (-1,2.5) node[anchor=south]{$V_{DD}$};
+                    \draw (-2,2.5) -- (-2,2);
+                    \draw (-2,2) to[R,l=$R_G$] (-2,0);
+                    \draw (-2,0) -- (nmos1.gate);
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (-3,0) to[short,o-] (-2,0);
+                    \draw (-3,0) node[anchor=east]{$v_{in}$};
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[nmos](nmos1){M1};
+                    \draw (0,-2) node[nmos](nmos2){M2};
+                    \draw (nmos1.source) -- (nmos2.drain);
+                    \draw (nmos2.source) -- (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    \draw (nmos2.gate) to[short,-o] (-1.5,-2);
+                    \draw (-1.5,-2) node[anchor=east]{$V_b$};
+                    \draw (nmos1.drain) -- (0,2);
+                    \draw (-2.5,2) -- (0.5,2);
+                    \draw (-1,2) node[anchor=south]{$V_{DD}$};
+                    \draw (-2,2) to[R,l=$R_G$] (-2,0);
+                    \draw (-2,0) -- (nmos1.gate);
+                    \draw (0,-1) to[short,-o] (1,-1);
+                    \draw (-3,0) to[short,o-] (-2,0);
+                    \draw (-3,0) node[anchor=east]{$v_{in}$};
+                    \draw (1,-1) node[anchor=west]{$v_{out}$};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}

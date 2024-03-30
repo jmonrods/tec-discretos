@@ -1,0 +1,622 @@
+\section{Clase 7}
+
+\title[Circuitos Discretos]{Circuitos Discretos}
+\subtitle{Clase 7: Colector Común}
+\institute[]{Instituto Tecnológico de Costa Rica\\Escuela de Ingeniería Electrónica\\Circuitos Discretos}
+\date{\theSemester}
+\titlegraphic{\includegraphics[height=8mm]{logoTEC.png}}
+
+\begin{frame}[t]
+\titlepage
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Colector Común (Seguidor de Emisor)}
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+                    \draw (0,-2) node[ground]{};
+                    \draw (npn1.collector) -- (0,1);
+                    \draw (-0.5,1) -- (0.5,1);
+                    \draw (0,1) node[anchor=south]{$V_{CC}$};
+                    \draw (0,-0.5) to[short,-o] (1,-0.5);
+                    \draw (1,-0.5) node[anchor=west]{$v_{out}$};
+                    \draw (-1.5,0) -- (npn1.base);
+                    \draw (-1.5,0) to[vsource,l=$v_{in}$] (-1.5,-2);
+                    \draw (-1.5,-2) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            Para la configuración de Colector Común:
+
+            \begin{itemize}
+                \item La entrada se aplica en la base.
+                \item La salida se toma del emisor.
+            \end{itemize}
+
+            \vspace{5mm}
+            Análisis cualitativo de $A_V$:
+
+            \begin{enumerate}
+                \item Si $v_{in}$ aumenta, $v_{BE}$ aumenta.
+                \item Si $v_{BE}$ aumenta, $i_C$ aumenta.
+                \item Si $i_C$ aumenta, $v_{RE}$ aumenta.
+                \item Si $v_{RE}$ aumenta, $v_{out}$ aumenta.
+            \end{enumerate}
+
+            $\Rightarrow$ Un cambio positivo en $v_{in}$ incrementa $v_{out}$
+
+            $\Rightarrow$ La ganancia es positiva
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Colector Común: Ganancia del Núcleo}
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            1. LCK en el emisor
+            %
+            \[ \dfrac{v_\pi}{r_\pi} + g_m v_\pi = \dfrac{v_{out}}{R_E} \]
+
+            Despejando $v_\pi$:
+            %
+            \[ v_{\pi} = \dfrac{v_{out}}{R_E \left( \dfrac{1}{r_\pi} + g_m \right)} \]
+            %
+            \[ v_{\pi} = \dfrac{v_{out}}{R_E \left( \dfrac{1}{r_\pi} + \dfrac{\beta}{r_\pi} \right)} \]
+            %
+            \[ v_{\pi} = \dfrac{v_{out} r_\pi}{(\beta+1) R_E} \]
+
+            2. LVK por la base:
+            %
+            \[ v_{in} = v_\pi + v_{out} \]
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \centering
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) -- (1,0);
+                    \draw (1,0) to[R,l=$r_\pi$,v=$v_\pi$] (1,-2);
+                    \draw (1,-2) -- (4,-2);
+                    \draw (3,0) to[cisource,l=$g_m v_\pi$] (3,-2);
+                    \draw (3,0) -- (5,0);
+                    \draw (5,0) node[ground]{};
+                    \draw (2,-2) node[anchor=south]{E};
+                    \draw (1,0) node[anchor=south]{B};
+                    \draw (5,0) node[anchor=south]{C};
+                    \draw (0,0) node[anchor=east]{$v_{in}$};
+                    \draw (4,-2) node[anchor=west]{$v_{out}$};
+                    \draw (3,-2) to[R,l=$R_E$] (3,-4);
+                    \draw (3,-4) node[ground]{};
+                \end{circuitikz}
+            \end{figure}
+
+            \flushleft
+            Sustituyendo 1 en 2:
+            %
+            \[ v_{in} = \dfrac{v_{out} r_\pi}{(\beta+1) R_E} + v_{out} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Colector Común: Ganancia del Núcleo}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \[ v_{in} = v_{out} \left( \dfrac{r_\pi}{(\beta+1) R_E} + 1 \right) \]
+            %
+            \[ \dfrac{v_{out}}{v_{in}} = \dfrac{1}{\dfrac{r_\pi}{(\beta+1) R_E} + 1} \]
+            %
+            \[ \dfrac{v_{out}}{v_{in}} = \dfrac{R_E}{\dfrac{r_\pi}{(\beta+1)} + R_E} \]
+            %
+            $\dfrac{1}{g_m} = \dfrac{r_\pi}{\beta} \approx \dfrac{r_\pi}{\beta+1} $
+            %
+            \[ \boxed{A_V = \dfrac{R_E}{\dfrac{1}{g_m} + R_E}} \]
+            %
+            \flushleft
+            La ganancia es positiva y menor que 1.
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            El seguidor de tensión es prácticamente un divisor de tensión:
+
+            \begin{figure}[H]
+                \centering
+                \scalebox{0.9}{
+                    \begin{circuitikz}
+                        \draw (0,0) node[npn](npn1){};
+                        \draw (-1,0) to[short,o-] (npn1.base);
+                        \draw (-1,0) node[anchor=east]{$v_{in}$};
+                        \draw (npn1.collector) -- (0,1);
+                        \draw (-0.5,1) -- (0.5,1);
+                        \draw (0,1) node[anchor=south]{$V_{CC}$};
+                        \draw (npn1.emitter) -- (0,-1);
+                        \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                        \draw (0,-3) node[ground]{};
+                        \draw (0,-1) to[short,-o] (1,-1);
+                        \draw (1,-1) node[anchor=west]{$v_{out}$};
+                        \draw (1.2,-0.7) -- (0.3,-0.7);
+                        \draw[->] (0.3,-0.7) -- (0.3,-0.3);
+                        \draw (1.2,-0.7) node[anchor=south]{$1/g_m$};
+                        % Divisor de tension
+                        \draw (3,1) to[R,l=$1/g_m$] (3,-1);
+                        \draw (3,-1) to[R,l=$R_E$] (3,-3);
+                        \draw (3,-3) node[ground]{};
+                        \draw (3,1) to[short,-o] (2.5,1);
+                        \draw (2.5,1) node[anchor=east]{$v_{in}$};
+                        \draw (3,-1) to[short,-o] (3.5,-1);
+                        \draw (3.5,-1) node[anchor=west]{$v_{out}$};
+                    \end{circuitikz}
+                }
+            \end{figure}
+
+            \[ v_{out} = \dfrac{v_{in}\times R_E}{\dfrac{1}{g_m} + R_E} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Seguidor de Emisor con RS}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (npn1.collector) -- (0,1);
+                    \draw (-0.5,1) -- (0.5,1);
+                    \draw (0,1) node[anchor=south]{$V_{CC}$};
+                    \draw (-2.5,0) to[R,l=$R_S$,o-] (npn1.base);
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    \draw (0,-1) to[short,-o] (1,-1);
+                    \draw (1,-1) node[anchor=west]{$v_{out}$};
+                    \draw (-2.5,0) node[anchor=east]{$v_{in}$};
+                    \draw (1.2,-0.7) -- (0.3,-0.7);
+                    \draw[->] (0.3,-0.7) -- (0.3,-0.3);
+                    \draw (1.2,-0.7) node[anchor=south]{$R_{eq}$};
+                \end{circuitikz}
+            \end{figure}
+
+            La resistencia desde el emisor:
+
+        \[ R_{eq} = \dfrac{1}{g_m} + \dfrac{R_S}{\beta+1} \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Por divisor de tensión:
+            %
+            \[ v_{out} = \dfrac{v_{in} \times R_E}{R_E + \dfrac{1}{g_m} + \dfrac{R_S}{\beta+1}} \]
+            %
+            \[ \boxed{A_V = \dfrac{R_E}{R_E + \dfrac{1}{g_m} + \dfrac{R_S}{\beta+1}}} \]
+
+            \vspace{5mm}
+            Las impedancias de entrada/salida:
+            %
+            \[ \boxed{R_{in} = R_S + r_\pi + (\beta+1)R_E} \]
+            %
+            \[ \boxed{R_{out} = R_E \parallel \left( \dfrac{1}{g_m} + \dfrac{R_S}{\beta+1} \right) } \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Seguidor de Emisor con RS y VA}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Incluyendo el efecto Early:
+
+            \begin{figure}[H]
+                \begin{circuitikz}
+                    \draw (0,0) node[npn](npn1){};
+                    \draw (npn1.collector) -- (0,1);
+                    \draw (-0.5,1) -- (1,1);
+                    \draw (0.25,1) node[anchor=south]{$V_{CC}$};
+                    \draw (-2.5,0) to[R,l=$R_S$,o-] (npn1.base);
+                    \draw (npn1.emitter) -- (0,-1);
+                    \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                    \draw (0,-3) node[ground]{};
+                    \draw (0,-1) to[short,-o] (1,-1);
+                    \draw (1,-1) node[anchor=west]{$v_{out}$};
+                    \draw (-2.5,0) node[anchor=east]{$v_{in}$};
+                    \draw (0.5,1) to[R,l=$r_o$] (0.5,-1);
+                \end{circuitikz}
+            \end{figure}
+
+            La resistencia $r_o$ está en paralelo con $R_E$ 
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Por divisor de tensión:
+            %
+            \[ v_{out} = \dfrac{v_{in} \times (R_E \parallel r_o)}{R_E \parallel r_o + \dfrac{1}{g_m} + \dfrac{R_S}{\beta+1}} \]
+            %
+            \[ \boxed{A_V = \dfrac{R_E \parallel r_o}{R_E \parallel r_o + \dfrac{1}{g_m} + \dfrac{R_S}{\beta+1}}} \]
+
+            \vspace{5mm}
+            Las impedancias de entrada/salida:
+            %
+            \[ \boxed{R_{in} = R_S + r_\pi + (\beta+1)(R_E \parallel r_o)} \]
+            %
+            \[ \boxed{R_{out} = R_E \parallel r_o \parallel \left( \dfrac{1}{g_m} + \dfrac{R_S}{\beta+1} \right) } \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Seguidor de Emisor: Polarización}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Por resistencia de base}
+            %
+            \begin{figure}[H]
+                \scalebox{0.75}{
+                    \begin{circuitikz}
+                        \draw (0,0) node[npn](npn1){};
+                        \draw (npn1.base) -- (-2,0);
+                        \draw (-2,2) to[R,l=$R_B$] (-2,0);
+                        \draw (npn1.collector) -- (0,2);
+                        \draw (-4,0) to[C,o-] (-2,0);
+                        \draw (npn1.emitter) -- (0,-1);
+                        \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                        \draw (0,-1) to[C,-o] (2,-1);
+                        \draw (-2.5,2) -- (0.5,2);
+                        \draw (-1,2) node[anchor=south]{$V_{CC}$};
+                        \draw (0,-3) node[ground]{};
+                        \draw (-4,0) node[anchor=east]{$v_{in}$};
+                        \draw (2,-1) node[anchor=west]{$v_{out}$};
+                    \end{circuitikz}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Por divisor de tensión}
+            %
+            \begin{figure}[H]
+                \scalebox{0.75}{
+                    \begin{circuitikz}
+                        \draw (0,0) node[npn](npn1){};
+                        \draw (npn1.base) -- (-2,0);
+                        \draw (-2,2) to[R,l=$R_1$] (-2,0);
+                        \draw (-2,0) to[R,l=$R_2$] (-2,-2);
+                        \draw (-2,-2) node[ground]{};
+                        \draw (npn1.collector) -- (0,2);
+                        \draw (-4,0) to[C,o-] (-2,0);
+                        \draw (npn1.emitter) -- (0,-1);
+                        \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                        \draw (0,-1) to[C,-o] (2,-1);
+                        \draw (-2.5,2) -- (0.5,2);
+                        \draw (-1,2) node[anchor=south]{$V_{CC}$};
+                        \draw (0,-3) node[ground]{};
+                        \draw (-4,0) node[anchor=east]{$v_{in}$};
+                        \draw (2,-1) node[anchor=west]{$v_{out}$};
+                    \end{circuitikz}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \vspace{5mm}
+    A diferencia de E.C., este circuito puede operar con tensiones de base muy cercanas a $V_{CC}$ debido a que $V_C = V_{CC}$.
+    
+    \vspace{3mm}
+    En otras palabras, este circuito siempre está en región activa directa.
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Seguidor de Emisor: Ejemplo}
+
+    Considere el siguiente circuito (Ejemplo 5.47 Razavi):
+
+    \begin{columns}
+        \begin{column}{0.66\textwidth}
+            \begin{figure}[H]
+                \scalebox{0.9}{
+                    \begin{circuitikz}
+                        \draw (0,0) node[npn](npn1){};
+                        \draw (npn1.base) -- (-2,0);
+                        \draw (-2,2) to[R,l=$R_B$] (-2,0);
+                        \draw (npn1.collector) -- (0,2);
+                        \draw (-4,0) to[C,o-] (-2,0);
+                        \draw (npn1.emitter) -- (0,-1);
+                        \draw (0,-1) to[R,l=$R_E$] (0,-3);
+                        \draw (0,-1) to[C,-o] (2,-1);
+                        \draw (-2.5,2) -- (0.5,2);
+                        \draw (-1,2) node[anchor=south]{$V_{CC}$};
+                        \draw (0,-3) node[ground]{};
+                        \draw (-4,0) node[anchor=east]{$v_{in}$};
+                        \draw (2,-1) node[anchor=west]{$v_{out}$};
+                    \end{circuitikz}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            Parámetros del transistor
+
+            \vspace{3mm}
+            $ \beta = 100 $
+            
+            $ I_S = 5\times 10^{-16}\ A $
+            
+            $ V_A = 0\ V $
+
+            \vspace{5mm}
+            Valores de resistencias
+
+            \vspace{3mm}
+            $ R_B = 10\ k\Omega $
+            
+            $ R_E = 1\ k\Omega $
+        \end{column}
+    \end{columns}
+
+    \vspace{5mm}
+    Determine el punto de operación ($I_C$, $V_{BE}$) y calcule $g_m$, $r_\pi$, $r_o$, $A_V$, $R_{in}$ y $R_{out}$.
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Seguidor de Emisor: Solución}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Punto de operación}
+            %
+            \[ I_C = \beta \dfrac{V_{CC}-V_{BE}}{R_B + (\beta+1)R_E} \]
+            %
+            \[ V_{BE} = V_t \ln (I_C / I_S) \]
+            %
+            \[ \boxed{I_C = 1.5788\ mA} \]
+            %
+            \[ \boxed{V_{BE} = 747.50\ mV} \]
+
+            \vspace{3mm}
+            \textbf{Parámetros $\pi$}
+            %
+            \[ g_m = \dfrac{I_C}{V_t} = \dfrac{1.5788\ mA}{26\ mV} = 60.7\ mS \]
+            %
+            \[ r_\pi = \dfrac{\beta}{g_m} = \dfrac{100}{60.7\ mS} = 1.647\ k\Omega \]
+            %
+            \[ r_o = \infty \]
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Ganancia}
+            %
+            \[ A_V = \dfrac{R_E}{\dfrac{1}{g_m} + R_E} = \dfrac{1\ k\Omega}{\dfrac{1}{60.7\ mS} + 1\ k\Omega} \]
+            %
+            \[ \boxed{A_V = 0.9838} \]
+
+            \vspace{3mm}
+            \textbf{Impedancias}
+            %
+            \[ R_{in} = r_\pi + (\beta+1) R_E \]
+            %
+            \[ \boxed{R_{in} = 102.65\ k\Omega} \]
+            %
+            \[ R_{out} = R_E \parallel \dfrac{1}{g_m} \]
+            %
+            \[ \boxed{R_{out} = 16.21\ \Omega} \]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%\begin{frame}[t]
+%    \frametitle{Aplicaciones del Seguidor de Emisor}
+%
+%\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Configuraciones Compuestas (1)}
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (npn1.collector) -- (0,1);
+            \draw (-2,1) to[R,l=$R_2$] (0,1);
+            \draw (-4,1) to[R,l=$R_1$] (-2,1);
+            \draw (npn1.base) -- (-4,0);
+            \draw (-4,1) -- (-4,0);
+            \draw (-6,0) to[R,l=$R_S$] (-4,0);
+            \draw (-6,0) to[vsource,l=$v_{in}$] (-6,-2);
+            \draw (-6,-2) node[ground]{};
+            \draw (npn1.emitter) to[R,l=$R_E$] (0,-2);
+            \draw (0,3) to[R,l=$R_C$] (0,1);
+            \draw (-0.5,3) -- (0.5,3);
+            \draw (0,-2) node[ground]{};
+            \draw (-2,1) -- (-2,2.5);
+            \draw (-2,2.5) to[C] (-3.5,2.5);
+            \draw (-3.5,2.5) node[ground]{};
+            \draw (0,3) node[anchor=south]{$V_{CC}$};
+            \draw (0,1) to[short,-o] (1,1);
+            \draw (1,1) node[anchor=west]{$v_{out}$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Configuraciones Compuestas (2)}
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (npn1.emitter) -- (0,-2);
+            \draw (0,-2) to[isource,l=$I_1$] (0,-4);
+            \draw (0,-4) node[ground]{};
+            \draw (-2,-2) to[R,l=$R_2$] (0,-2);
+            \draw (-2,0) to[R,l=$R_1$] (-2,-2);
+            \draw (-2,-2) to[C] (-2,-4);
+            \draw (-2,-4) node[ground]{};
+            \draw (npn1.base) -- (-2,0);
+            \draw (-4,0) to[C] (-2,0);
+            \draw (-6,0) to[R,l=$R_S$] (-4,0);
+            \draw (-6,0) to[vsource,l=$v_{in}$] (-6,-2);
+            \draw (-6,-2) node[ground]{};
+            \draw (0,2) to[R,l=$R_C$] (npn1.collector);
+            \draw (0,2) -- (0,2.5);
+            \draw (-0.5,2.5) -- (0.5,2.5);
+            \draw (0,2.5) node[anchor=south]{$V_{CC}$};
+            \draw (0,0.5) to[short,-o] (1,0.5);
+            \draw (1,0.5) node[anchor=west]{$v_{out}$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Configuraciones Compuestas (3)}
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (0,0) node[anchor=west]{$Q_1$};
+            \draw (2,0) node[npn,xscale=-1](npn2){};
+            \draw (2,0) node[anchor=east]{$Q_2$};
+            \draw (npn1.emitter) -- (0,-1);
+            \draw (npn2.emitter) -- (2,-1);
+            \draw (0,-1) -- (2,-1);
+            \draw (1,-1) to[isource,l=$I_1$] (1,-3);
+            \draw (1,-3) node[ground]{};
+            \draw (npn1.base) -- (-1,0);
+            \draw (-1,0) to[vsource] (-1,-2);
+            \draw (-1,-2) node[ground]{};
+            \draw (-1.5,-1) node[anchor=east]{$v_{in}$};
+            \draw (0,3) to[R,l=$R_C$] (0,1);
+            \draw (0,1) -- (npn1.collector);
+            \draw (0,1) to[short,-o] (-1,1);
+            \draw (-1,1) node[anchor=east]{$v_{out}$};
+            \draw (2,3) -- (npn2.collector);
+            \draw (-0.5,3) -- (2.5,3);
+            \draw (1,3) node[anchor=south]{$V_{CC}$};
+            \draw (npn2.base) to[R,l=$R_1$] (4,0);
+            \draw (4,0) to[short,-o] (4.5,0);
+            \draw (4.5,0) node[anchor=west]{$V_1\ (CD)$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Configuraciones Compuestas (4)}
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn,xscale=-1](npn1){};
+            \draw (npn1.base) -- (2,0);
+            \draw (2,0) to[R,l=$R_2$] (2,-2);
+            \draw (2,-2) node[ground]{};
+            \draw (2,0) -- (2,1);
+            \draw (0,1) to[R,l=$R_1$] (2,1);
+            \draw (2,0) -- (4,0);
+            \draw (4,0) to[C] (4,-2);
+            \draw (4,-2) node[ground]{};
+            \draw (npn1.emitter) -- (0,-1);
+            \draw (-2,-1) to[C] (0,-1);
+            \draw (-4,-1) to[R,l=$R_S$] (-2,-1);
+            \draw (-4,-1) to[vsource,l=$v_{in}$] (-4,-3);
+            \draw (-4,-3) node[ground]{};
+            \draw (npn1.collector) -- (0,1);
+            \draw (0,1) to[short,-o] (-1,1);
+            \draw (-1,1) node[anchor=east]{$v_{out}$};
+            \draw (0,3.5) to[R,l=$R_C$] (0,1.5);
+            \draw (0,1.5) -- (0,1);
+            \draw (-0.5,3.5) -- (0.5,3.5);
+            \draw (0,3.5) node[anchor=south]{$V_{CC}$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Configuraciones Compuestas (5)}
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn,xscale=-1](npn1){};
+            \draw (2,1) node[npn,xscale=-1](npn2){};
+            \draw (npn1.base) -- (2,0);
+            \draw (2,0) -- (npn2.emitter);
+            \draw (0,3) to[R,l=$R_C$] (npn1.collector);
+            \draw (2,3) -- (npn2.collector);
+            \draw (-0.5,3) -- (3.5,3);
+            \draw (2,3) node[anchor=south]{$V_{CC}$};
+            \draw (0,1) to[short,-o] (-1,1);
+            \draw (-1,1) node[anchor=east]{$v_{out}$};
+            \draw (npn1.emitter) -- (0,-1);
+            \draw (0,-1) to[short,-o] (-1,-1);
+            \draw (-1,-1) node[anchor=east]{$v_{in}$};
+            \draw (2,0) to[R,l=$R_E$] (2,-2);
+            \draw (2,-2) node[ground]{};
+            \draw (npn2.base) -- (3,1);
+            \draw (3,3) to[R,l=$R_B$] (3,1);
+            \draw (0,0) node[anchor=east]{$Q_1$};
+            \draw (2,1) node[anchor=east]{$Q_2$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Configuraciones Compuestas (6)}
+
+    \begin{figure}[H]
+        \begin{circuitikz}
+            \draw (0,0) node[npn](npn1){};
+            \draw (npn1.emitter) -- (0,-2);
+            \draw (0,-2) to[R,l=$R_E$] (0,-4);
+            \draw (0,-4) node[ground]{};
+            \draw (-2,-2) to[R,l=$R_2$] (0,-2);
+            \draw (-2,0) to[R,l=$R_1$] (-2,-2);
+            \draw (-2,-2) to[C] (-2,-4);
+            \draw (-2,-4) node[ground]{};
+            \draw (npn1.base) -- (-2,0);
+            \draw (-5,0) to[R,l=$R_S$] (-2,0);
+            \draw (-5,0) to[vsource,l=$v_{in}$] (-5,-2);
+            \draw (-5,-2) node[ground]{};
+            \draw (npn1.collector) -- (0,1);
+            \draw (-0.5,1) -- (1.5,1);
+            \draw (0.5,1) node[anchor=south]{$V_{CC}$};
+            \draw (1,1) to[R,l=$r_o$] (1,-1);
+            \draw (0,-1) -- (1,-1);
+            \draw (0,-2) to[short,-o] (1,-2);
+            \draw (1,-2) node[anchor=west]{$v_{out}$};
+        \end{circuitikz}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Configuraciones Compuestas (7)}
+
+    \begin{figure}[H]
+        \scalebox{0.8}{
+            \begin{circuitikz}
+                \draw (0,3) node[npn](npn1){$Q_1$};
+                \draw (0,0) node[npn](npn2){$Q_3$};
+                \draw (0,-3) node[pnp](pnp1){$Q_2$};
+                \draw (0,0.5) to[short,-o] (1,0.5);
+                \draw (1,0.5) node[anchor=west]{$v_{out}$};
+                \draw (npn1.emitter) to[R,l=$R_C$] (npn2.collector);
+                \draw (npn2.emitter) to[R,l=$R_E$] (pnp1.emitter);
+                \draw (0,-4) node[ground]{};
+                \draw (0,-4) -- (pnp1.collector);
+                \draw (0,4) -- (npn1.collector);
+                \draw (-3,3) to[R,l=$R_{B1}$] (npn1.base);
+                \draw (-3,-3) to[R,l=$R_{B2}$] (pnp1.base);
+                \draw (-1,0) to[short,o-] (npn2.base);
+                \draw (-1,0) node[anchor=east]{$v_{in}$};
+                \draw (-3,-3) -- (-3,-4);
+                \draw (-3,-4) node[ground]{};
+                \draw (-3,3) -- (-3,4);
+                \draw (-3.5,4) -- (0.5,4);
+                \draw (-1.5,4) node[anchor=south]{$V_{CC}$};
+            \end{circuitikz}
+        }
+    \end{figure}
+\end{frame}
